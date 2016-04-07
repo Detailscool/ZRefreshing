@@ -30,7 +30,7 @@ private var footerAssociationKey: UInt8 = 0
 private var reloadDataClosureKey: UInt8 = 0
 
 public extension UIScrollView {
-    /*
+    
     public var header: ZRefreshHeader? {
         get {
             return objc_getAssociatedObject(self, &headerAssociationKey) as? ZRefreshHeader
@@ -60,7 +60,7 @@ public extension UIScrollView {
             }
         }
     }
-    */
+    
     var totalDataCount: Int {
         get {
             var totalCount: Int = 0
@@ -102,7 +102,6 @@ public extension UIScrollView {
         self.reloadDataClosure?(value: self.totalDataCount)
     }
 }
-/*
 
 extension UITableView {
     
@@ -122,7 +121,6 @@ extension UITableView {
     }
 
     func refreshReloadData() {
-        print("-------- Reload Data --------")
         self.refreshReloadData()
         self.executeReloadDataBlock()
     }
@@ -146,7 +144,6 @@ extension UICollectionView {
     }
     
     func refreshReloadData() {
-        print("-------- Reload Data --------")
         self.refreshReloadData()
         self.executeReloadDataBlock()
     }
@@ -180,4 +177,4 @@ extension NSObject {
             method_exchangeImplementations(method1, method2);
         }
     }
-}*/
+}
