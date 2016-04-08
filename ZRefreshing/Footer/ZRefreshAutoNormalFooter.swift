@@ -40,9 +40,9 @@ public class ZRefreshAutoNormalFooter: ZRefreshAutoStateFooter {
         self.loadingView.center = CGPointMake(loadingCenterX, loadingCenterY);
     }
     
-    override public func setState(state: ZRefreshState) {
+    override public func setRefreshingState(state: ZRefreshState) {
         if self.checkState(state).0 { return }
-        super.setState(state)
+        super.setRefreshingState(state)
         if state == .NoMoreData || state == .Idle {
             self.loadingView.stopAnimating()
         } else if state == .Refreshing {

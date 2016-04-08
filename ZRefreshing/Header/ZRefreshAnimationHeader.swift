@@ -61,9 +61,9 @@ public class ZRefreshAnimationHeader: ZRefreshStateHeader {
         }
     }
     
-    override public func setState(state: ZRefreshState) {
+    override public func setRefreshingState(state: ZRefreshState) {
         if self.checkState(state).0 { return }
-        super.setState(state)
+        super.setRefreshingState(state)
         
         if state == .Pulling || state == .Refreshing {
             let images = self.stateImages[state]

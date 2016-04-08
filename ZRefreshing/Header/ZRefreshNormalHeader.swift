@@ -21,8 +21,8 @@ public class ZRefreshNormalHeader: ZRefreshStateHeader {
     
     override public func prepare() {
         super.prepare()
-        
-        self.arrowView.image = UIImage(named: "ZRefresh.bundle/arrow.png")
+    
+        self.arrowView.image = ZRefreshing.imageOf("arrow.png")
         if self.arrowView.superview == nil {
             self.addSubview(self.arrowView)
         }
@@ -44,11 +44,14 @@ public class ZRefreshNormalHeader: ZRefreshStateHeader {
         let arrowCenterY = self.frame.height * 0.5
         let arrowCenter = CGPointMake(arrowCenterX, arrowCenterY)
         
-        if (self.arrowView.constraints.count == 0) {
+        if (self.arrowView.constraints.count == 0 && self.arrowView.image != nil) {
+            self.arrowView.hidden = false
             var rect = self.arrowView.frame
             rect.size = self.arrowView.image!.size
             self.arrowView.frame = rect
             self.arrowView.center = arrowCenter
+        } else {
+            self.arrowView.hidden = true
         }
         
         if (self.loadingView.constraints.count == 0) {
@@ -56,10 +59,9 @@ public class ZRefreshNormalHeader: ZRefreshStateHeader {
         }
     }
     
-    override public func setState(state: ZRefreshState) {
+    override public func setRefreshingState(state: ZRefreshState) {
         if self.checkState(state).0 { return }
-        
-        super.setState(state)
+        super.setRefreshingState(state)
         
         if self.state == .Idle {
             if self.state == .Refreshing {

@@ -10,6 +10,8 @@ import UIKit
 public class ZRefreshComponent: UIView {
     
     private var pan: UIPanGestureRecognizer?
+    private var target: AnyObject?
+    private var action: Selector?
     
     internal var refreshClosure: ZRefreshClosure?
     internal var state : ZRefreshState = .Idle
@@ -45,7 +47,18 @@ public class ZRefreshComponent: UIView {
     // MARK: - public initialized
     public required init(refreshClosure: ZRefreshClosure) {
         super.init(frame: CGRectZero)
+        
+        
+        
         self.refreshClosure = refreshClosure
+        self.prepare()
+    }
+    
+    public required init(target: AnyObject?, action: Selector?) {
+        super.init(frame: CGRectZero)
+        self.target = target
+        self.action = action
+        
         self.prepare()
     }
     
@@ -61,17 +74,17 @@ public class ZRefreshComponent: UIView {
         }
         self.pullingPercent = 1.0
         if self.window != nil {
-            self.setState(.Refreshing)
+            self.setRefreshingState(.Refreshing)
         } else {
             if self.state != .Refreshing {
-                self.setState(.WillRefresh)
+                self.setRefreshingState(.WillRefresh)
                 self.setNeedsDisplay()
             }
         }
     }
     
     public func endRefreshing() {
-        self.setState(.Idle)
+        self.setRefreshingState(.Idle)
     }
     
     // MARK: - Override
@@ -119,7 +132,7 @@ public class ZRefreshComponent: UIView {
     override public func drawRect(rect: CGRect) {
         super.drawRect(rect)
         if self.state == .WillRefresh {
-            self.setState(.Refreshing)
+            self.setRefreshingState(.Refreshing)
         }
     }
     
@@ -132,6 +145,9 @@ public class ZRefreshComponent: UIView {
     internal func executeRefreshCallback() {
         dispatch_async(dispatch_get_main_queue()) {
             self.refreshClosure?()
+            if self.target != nil && self.action != nil {
+                self.target!.performSelector(self.action!, withObject: self)
+            }
         }
     }
 
@@ -169,7 +185,7 @@ public class ZRefreshComponent: UIView {
     public func scrollViewContentSizeDidChange(change: [String: AnyObject]?) {}
     public func scrollViewPanStateDidChange(change: [String: AnyObject]?) {}
     
-    public func setState(state: ZRefreshState) {
+    public func setRefreshingState(state: ZRefreshState) {
         if self.checkState(state).0 {
             return
         }
@@ -180,6 +196,6 @@ public class ZRefreshComponent: UIView {
         if self.state == state {
             return (result: true, state: self.state)
         }
-        return (result: true, state: self.state)
+        return (result: false, state: self.state)
     }
 }

@@ -21,7 +21,6 @@ internal class ZRefreshingLabel: UILabel {
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
-    
 }
 
 

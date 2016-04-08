@@ -36,6 +36,14 @@ struct ZRefreshing {
     static let backFooterPullingText = "松开立即加载更多"
     static let backFooterRefreshingText = "正在加载更多的数据..."
     static let backFooterNoMoreDataText = "已经全部加载完毕"
+    static func imageOf(name: String) -> UIImage? {
+
+        let manualSoure = "ZRefreshing.bundle".stringByAppendingFormat("%@", name)
+        let frameworkSoure = NSBundle(forClass: ZRefreshComponent.self).bundlePath.stringByAppendingFormat("/ZRefreshing.bundle/%@", name)
+        
+        let image = UIImage(named: manualSoure) == nil ? UIImage(named: frameworkSoure) : UIImage(named: manualSoure)
+        return image
+    }
 }
 
 public enum ZRefreshState {

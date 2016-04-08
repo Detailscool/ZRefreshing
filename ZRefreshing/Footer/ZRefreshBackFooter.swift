@@ -34,9 +34,9 @@ public class ZRefreshBackFooter: ZRefreshFooter {
             self.pullingPercent = pullingPercent
             let normal2pullingOffsetY = happenOffsetY + self.frame.height
             if self.state == .Idle && currentOffsetY > normal2pullingOffsetY {
-                self.setState(.Pulling)
+                self.setRefreshingState(.Pulling)
             } else if self.state == .Pulling && currentOffsetY <= normal2pullingOffsetY {
-                self.setState(.Idle)
+                self.setRefreshingState(.Idle)
             }
         } else if (self.state == .Pulling) {
             self.beginRefreshing()
@@ -55,13 +55,13 @@ public class ZRefreshBackFooter: ZRefreshFooter {
         self.frame.origin.y = max(contentHeight, scrollHeight)
     }
     
-    override public func setState(state: ZRefreshState) {
+    override public func setRefreshingState(state: ZRefreshState) {
         if self.scrollView == nil { return }
         
         let result = self.checkState(state)
         if result.0 { return }
         
-        super.setState(state)
+        super.setRefreshingState(state)
         
         if state == .NoMoreData || state == .Idle {
             

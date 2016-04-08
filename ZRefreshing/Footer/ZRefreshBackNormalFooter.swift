@@ -45,11 +45,14 @@ public class ZRefreshBackNormalFooter: ZRefreshBackStateFooter {
         let arrowCenterY = self.frame.height * 0.5
         let arrowCenter = CGPointMake(arrowCenterX, arrowCenterY)
         
-        if (self.arrowView.constraints.count == 0) {
+        if (self.arrowView.constraints.count == 0 && self.arrowView.image != nil) {
+            self.arrowView.hidden = false
             var rect = self.arrowView.frame
             rect.size = self.arrowView.image!.size
             self.arrowView.frame = rect
             self.arrowView.center = arrowCenter
+        } else {
+            self.arrowView.hidden = true
         }
         
         if (self.loadingView.constraints.count == 0) {
@@ -57,10 +60,10 @@ public class ZRefreshBackNormalFooter: ZRefreshBackStateFooter {
         }
     }
     
-    override public func setState(state: ZRefreshState) {
+    override public func setRefreshingState(state: ZRefreshState) {
         let result = self.checkState(state)
         if result.0 { return }
-        super.setState(state)
+        super.setRefreshingState(state)
         
         if state == .Idle {
             if result.1 == .Refreshing {

@@ -75,9 +75,9 @@ public class ZRefreshAutoFooter: ZRefreshFooter {
         }
     }
     
-    override public func setState(state: ZRefreshState) {
+    override public func setRefreshingState(state: ZRefreshState) {
         if self.checkState(state).0 { return }
-        super.setState(state)
+        super.setRefreshingState(state)
         
         if self.state == .Refreshing {
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, Int64(0.5 * Double(NSEC_PER_SEC))), dispatch_get_main_queue(), { 
@@ -91,7 +91,7 @@ public class ZRefreshAutoFooter: ZRefreshFooter {
         self.hidden = hidden
         
         if !isHidden && hidden {
-            self.setState(.Idle)
+            self.setRefreshingState(.Idle)
             self.scrollView?.contentInset.bottom -= self.frame.height
         } else {
             self.scrollView?.contentInset.bottom += self.frame.height

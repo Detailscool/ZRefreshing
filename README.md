@@ -19,7 +19,13 @@ run pod install
 ## Manual
 
 ``` bash 
-1. Download this project, And Drag ZRefreshing.xcodeproj to your own project.
+1. Download this project, And drag ZRefreshing.xcodeproj to your own project.
 2. In your target’s General tab, click the ’+’ button under Linked Frameworks and Libraries.
-3. Select the appropriate ZRefreshing.framework to Add to your platform. 
+3. Select the ZRefreshing.framework to Add to your platform. 
+```
+
+# Usage 
+
+``` bash
+
 ```

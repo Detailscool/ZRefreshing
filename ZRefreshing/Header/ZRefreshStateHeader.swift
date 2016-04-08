@@ -100,11 +100,11 @@ public class ZRefreshStateHeader: ZRefreshHeader {
         }
     }
     
-    override public func setState(state: ZRefreshState) {
+    override public func setRefreshingState(state: ZRefreshState) {
         if self.checkState(state).0 {
             return
         }
-        super.setState(state)
+        super.setRefreshingState(state)
         self.stateLabel.text = self.stateTitles[self.state];
         let key = self.lastUpdatedTimeKey
         self.lastUpdatedTimeKey = key

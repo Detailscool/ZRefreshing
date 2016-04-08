@@ -28,11 +28,11 @@ public class ZRefreshHeader: ZRefreshComponent {
         self.frame.origin.y = -self.frame.height - self.ignoredScrollViewContentInsetTop
     }
 
-    override public func setState(state: ZRefreshState) {
+    override public func setRefreshingState(state: ZRefreshState) {
         let result = self.checkState(state)
         if result.0 { return }
         
-        super.setState(state)
+        super.setRefreshingState(state)
         
         if (self.state == .Idle) {
             if result.1 != .Refreshing { return }
@@ -96,9 +96,9 @@ public class ZRefreshHeader: ZRefreshComponent {
         if self.scrollView!.dragging {
             self.pullingPercent = pullingPercent
             if self.state == .Idle && offsetY < normal2pullingOffsetY {
-                self.setState(.Pulling)
+                self.setRefreshingState(.Pulling)
             } else if self.state == .Pulling && offsetY >= normal2pullingOffsetY {
-                self.setState(.Idle)
+                self.setRefreshingState(.Idle)
             }
         } else if self.state == .Pulling {
             self.beginRefreshing()

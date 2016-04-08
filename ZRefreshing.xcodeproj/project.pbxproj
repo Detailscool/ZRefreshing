@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		BA0C99681CB723200051B567 /* ZRefreshing.bundle in Resources */ = {isa = PBXBuildFile; fileRef = BA0C99671CB723200051B567 /* ZRefreshing.bundle */; };
 		BAFCC5FB1CB68C4F007C29DE /* ZRefreshing.h in Headers */ = {isa = PBXBuildFile; fileRef = BAFCC5FA1CB68C4F007C29DE /* ZRefreshing.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		BAFCC6101CB68FE1007C29DE /* ZRefreshComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAFCC60F1CB68FE1007C29DE /* ZRefreshComponent.swift */; };
 		BAFCC6161CB690B9007C29DE /* Constrants.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAFCC6141CB690B9007C29DE /* Constrants.swift */; };
@@ -27,6 +28,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		BA0C99671CB723200051B567 /* ZRefreshing.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = ZRefreshing.bundle; sourceTree = "<group>"; };
 		BAFCC5F71CB68C4F007C29DE /* ZRefreshing.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ZRefreshing.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BAFCC5FA1CB68C4F007C29DE /* ZRefreshing.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZRefreshing.h; sourceTree = "<group>"; };
 		BAFCC5FC1CB68C4F007C29DE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -84,6 +86,7 @@
 				BAFCC6141CB690B9007C29DE /* Constrants.swift */,
 				BAFCC6151CB690B9007C29DE /* Extensions.swift */,
 				BAFCC60F1CB68FE1007C29DE /* ZRefreshComponent.swift */,
+				BA0C99671CB723200051B567 /* ZRefreshing.bundle */,
 				BAFCC5FC1CB68C4F007C29DE /* Info.plist */,
 			);
 			path = ZRefreshing;
@@ -185,6 +188,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BA0C99681CB723200051B567 /* ZRefreshing.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

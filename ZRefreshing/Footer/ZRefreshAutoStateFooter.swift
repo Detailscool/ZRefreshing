@@ -47,9 +47,9 @@ public class ZRefreshAutoStateFooter: ZRefreshAutoFooter {
         self.stateLabel.frame = self.bounds;
     }
     
-    override public func setState(state: ZRefreshState) {
+    override public func setRefreshingState(state: ZRefreshState) {
         if self.checkState(state).0 { return }
-        super.setState(state)
+        super.setRefreshingState(state)
         
         if self.refreshingTitleHidden && state == .Refreshing {
             self.stateLabel.text = nil

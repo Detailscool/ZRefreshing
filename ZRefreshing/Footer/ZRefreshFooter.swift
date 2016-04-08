@@ -35,11 +35,11 @@ public class ZRefreshFooter: ZRefreshComponent {
     
     // MARK: - Component Control
     public func endRefreshingWithNoMoreData() {
-        self.setState(.NoMoreData)
+        self.setRefreshingState(.NoMoreData)
     }
     
     public func resetNoMoreData() {
-        self.setState(.Idle)
+        self.setRefreshingState(.Idle)
     }
     
     // MARK: - SubClass Implemention
