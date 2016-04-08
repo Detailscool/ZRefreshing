@@ -8,6 +8,7 @@
 
 import UIKit
 import ZRefreshing
+
 class ViewController: UITableViewController {
 
     private var numberOfCell: Int = 20
@@ -16,12 +17,13 @@ class ViewController: UITableViewController {
         super.viewDidLoad()
         
         self.tableView.registerClass(UITableViewCell.classForCoder(), forCellReuseIdentifier: "Cell")
+        
         self.tableView.header = ZRefreshNormalHeader(refreshClosure: {
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, Int64(1.5 * Double(NSEC_PER_SEC))), dispatch_get_main_queue(), {
                 self.tableView.header?.endRefreshing()
             })
         })
-//        self.tableView.header?.beginRefreshing()
+        self.tableView.header?.beginRefreshing()
     }
 
     func loadData() {

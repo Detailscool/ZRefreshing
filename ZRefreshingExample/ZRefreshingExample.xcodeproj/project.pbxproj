@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		805BE93226932CF35C4711C9 /* Pods_ZRefreshingExample.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA07C06F85C7A837579CED44 /* Pods_ZRefreshingExample.framework */; };
 		BAFCC5DC1CB68C35007C29DE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAFCC5DB1CB68C35007C29DE /* AppDelegate.swift */; };
 		BAFCC5DE1CB68C35007C29DE /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAFCC5DD1CB68C35007C29DE /* ViewController.swift */; };
 		BAFCC5E11CB68C35007C29DE /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BAFCC5DF1CB68C35007C29DE /* Main.storyboard */; };
@@ -15,6 +16,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		AA517CDF496F6D9AEE72B936 /* Pods-ZRefreshingExample.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ZRefreshingExample.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ZRefreshingExample/Pods-ZRefreshingExample.debug.xcconfig"; sourceTree = "<group>"; };
+		B00DF55C1D18447C4F483450 /* Pods-ZRefreshingExample.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ZRefreshingExample.release.xcconfig"; path = "Pods/Target Support Files/Pods-ZRefreshingExample/Pods-ZRefreshingExample.release.xcconfig"; sourceTree = "<group>"; };
+		BA07C06F85C7A837579CED44 /* Pods_ZRefreshingExample.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ZRefreshingExample.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BAFCC5D81CB68C35007C29DE /* ZRefreshingExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ZRefreshingExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BAFCC5DB1CB68C35007C29DE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		BAFCC5DD1CB68C35007C29DE /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -29,17 +33,29 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				805BE93226932CF35C4711C9 /* Pods_ZRefreshingExample.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2902F940D8A483F5E95FCC3C /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				AA517CDF496F6D9AEE72B936 /* Pods-ZRefreshingExample.debug.xcconfig */,
+				B00DF55C1D18447C4F483450 /* Pods-ZRefreshingExample.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		BAFCC5CF1CB68C35007C29DE = {
 			isa = PBXGroup;
 			children = (
 				BAFCC5DA1CB68C35007C29DE /* ZRefreshingExample */,
 				BAFCC5D91CB68C35007C29DE /* Products */,
+				2902F940D8A483F5E95FCC3C /* Pods */,
+				EA5D9AADE9973EC172400B72 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -64,6 +80,14 @@
 			path = ZRefreshingExample;
 			sourceTree = "<group>";
 		};
+		EA5D9AADE9973EC172400B72 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				BA07C06F85C7A837579CED44 /* Pods_ZRefreshingExample.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -71,9 +95,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = BAFCC5EA1CB68C36007C29DE /* Build configuration list for PBXNativeTarget "ZRefreshingExample" */;
 			buildPhases = (
+				33ADE10FE42A32F8C3F9E967 /* Check Pods Manifest.lock */,
 				BAFCC5D41CB68C35007C29DE /* Sources */,
 				BAFCC5D51CB68C35007C29DE /* Frameworks */,
 				BAFCC5D61CB68C35007C29DE /* Resources */,
+				3477C815D95A300CDB97F775 /* Embed Pods Frameworks */,
+				82A81B2C15D8AC4F796B22A7 /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -129,6 +156,54 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		33ADE10FE42A32F8C3F9E967 /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		3477C815D95A300CDB97F775 /* Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-ZRefreshingExample/Pods-ZRefreshingExample-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		82A81B2C15D8AC4F796B22A7 /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-ZRefreshingExample/Pods-ZRefreshingExample-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		BAFCC5D41CB68C35007C29DE /* Sources */ = {
@@ -247,6 +322,7 @@
 		};
 		BAFCC5EB1CB68C36007C29DE /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = AA517CDF496F6D9AEE72B936 /* Pods-ZRefreshingExample.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = ZRefreshingExample/Info.plist;
@@ -258,6 +334,7 @@
 		};
 		BAFCC5EC1CB68C36007C29DE /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = B00DF55C1D18447C4F483450 /* Pods-ZRefreshingExample.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = ZRefreshingExample/Info.plist;

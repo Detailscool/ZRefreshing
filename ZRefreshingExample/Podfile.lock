@@ -1,0 +1,12 @@
+PODS:
+  - ZRefreshing (1.2.1)
+
+DEPENDENCIES:
+  - ZRefreshing (~> 1.2.1)
+
+SPEC CHECKSUMS:
+  ZRefreshing: 99c04966e133333dffb1eb40812bbf1f25f492a0
+
+PODFILE CHECKSUM: 4e03729ab11150f71f48705b90384bcff177badb
+
+COCOAPODS: 1.0.0.beta.4
