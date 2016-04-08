@@ -47,9 +47,6 @@ public class ZRefreshComponent: UIView {
     // MARK: - public initialized
     public required init(refreshClosure: ZRefreshClosure) {
         super.init(frame: CGRectZero)
-        
-        
-        
         self.refreshClosure = refreshClosure
         self.prepare()
     }
@@ -146,6 +143,7 @@ public class ZRefreshComponent: UIView {
         dispatch_async(dispatch_get_main_queue()) {
             self.refreshClosure?()
             if self.target != nil && self.action != nil {
+                if !self.target!.respondsToSelector(self.action!) { return }
                 self.target!.performSelector(self.action!, withObject: self)
             }
         }
