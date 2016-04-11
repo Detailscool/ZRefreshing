@@ -21,7 +21,7 @@ Pod::Spec.new do |s|
   s.author       = { "zevwings" => "zev.wings@gmail.com" }
   s.source       = { :git => "https://github.com/zevwings/ZRefreshing.git", :tag => "#{s.version}" }
   s.source_files = "ZRefreshing/**/*.swift", "ZRefreshing/ZRefreshing.h"
-  ## s.resources    = "ZRefreshing/ZRefreshing.bundle"
+  s.resources = "ZRefreshing/ZRefreshing.bundle"
   s.requires_arc = true
   s.platform     = :ios
   s.ios.deployment_target = "8.0"
