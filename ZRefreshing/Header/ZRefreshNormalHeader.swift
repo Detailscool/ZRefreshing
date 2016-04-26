@@ -9,12 +9,23 @@ import UIKit
 
 public class ZRefreshNormalHeader: ZRefreshStateHeader {
     
-    private(set) lazy var arrowView = UIImageView()
-    private(set) lazy var loadingView = UIActivityIndicatorView()
+    public private(set) lazy var arrowView: UIImageView = {
+        let arrowView = UIImageView()
+        arrowView.image = ZRefreshing.imageOf("arrow.png")
+        return arrowView
+    }()
+    
+    private(set) lazy var activityIndicator : UIActivityIndicatorView = {
+        var activityIndicator = UIActivityIndicatorView()
+        activityIndicator.activityIndicatorViewStyle = self.activityIndicatorViewStyle
+        activityIndicator.hidesWhenStopped = true
+
+        return activityIndicator
+    }()
     
     public var activityIndicatorViewStyle: UIActivityIndicatorViewStyle = .Gray {
         didSet {
-            self.loadingView.activityIndicatorViewStyle = self.activityIndicatorViewStyle
+            self.activityIndicator.activityIndicatorViewStyle = self.activityIndicatorViewStyle
             self.setNeedsLayout()
         }
     }
@@ -22,15 +33,12 @@ public class ZRefreshNormalHeader: ZRefreshStateHeader {
     override public func prepare() {
         super.prepare()
     
-        self.arrowView.image = ZRefreshing.imageOf("arrow.png")
         if self.arrowView.superview == nil {
             self.addSubview(self.arrowView)
         }
         
-        self.loadingView.activityIndicatorViewStyle = self.activityIndicatorViewStyle
-        self.loadingView.hidesWhenStopped = true
-        if self.loadingView.superview == nil {
-            self.addSubview(self.loadingView)
+        if self.activityIndicator.superview == nil {
+            self.addSubview(self.activityIndicator)
         }
     }
     
@@ -54,8 +62,8 @@ public class ZRefreshNormalHeader: ZRefreshStateHeader {
             self.arrowView.hidden = true
         }
         
-        if (self.loadingView.constraints.count == 0) {
-            self.loadingView.center = arrowCenter
+        if (self.activityIndicator.constraints.count == 0) {
+            self.activityIndicator.center = arrowCenter
         }
     }
     
@@ -67,29 +75,29 @@ public class ZRefreshNormalHeader: ZRefreshStateHeader {
             if self.state == .Refreshing {
                 self.arrowView.transform = CGAffineTransformIdentity
                 UIView.animateWithDuration(ZRefreshing.slowAnimationDuration, animations: {
-                    self.loadingView.alpha = 0.0
+                    self.activityIndicator.alpha = 0.0
                     }, completion: {(flag) in
                         if self.state != .Idle { return }
-                        self.loadingView.alpha = 1.0
-                        self.loadingView.stopAnimating()
+                        self.activityIndicator.alpha = 1.0
+                        self.activityIndicator.stopAnimating()
                         self.arrowView.hidden = false
                 })
             } else {
-                self.loadingView.stopAnimating()
+                self.activityIndicator.stopAnimating()
                 self.arrowView.hidden = false
                 UIView.animateWithDuration(ZRefreshing.fastAnimationDuration, animations: {
                     self.arrowView.transform = CGAffineTransformIdentity
                 })
             }
         } else if self.state == .Pulling {
-            self.loadingView.stopAnimating()
+            self.activityIndicator.stopAnimating()
             self.arrowView.hidden = false
             UIView.animateWithDuration(ZRefreshing.fastAnimationDuration, animations: {
                 self.arrowView.transform = CGAffineTransformMakeRotation(0.000001 - CGFloat(M_PI));
             })
         } else if self.state == .Refreshing {
-            self.loadingView.alpha = 1.0
-            self.loadingView.startAnimating()
+            self.activityIndicator.alpha = 1.0
+            self.activityIndicator.startAnimating()
             self.arrowView.hidden = true
         }
     }

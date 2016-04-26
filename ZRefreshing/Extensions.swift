@@ -8,8 +8,8 @@
 
 import UIKit
 
-internal class ZRefreshingLabel: UILabel {
-    init() {
+public class ZRefreshingLabel: UILabel {
+    internal init() {
         super.init(frame: CGRectZero);
         self.font = ZRefreshing.labelFont
         self.textColor = ZRefreshing.labelTextColor
@@ -18,7 +18,11 @@ internal class ZRefreshingLabel: UILabel {
         self.backgroundColor = UIColor.clearColor()
     }
     
-    required init?(coder aDecoder: NSCoder) {
+    public override init(frame: CGRect) {
+        super.init(frame: frame)
+    }
+    
+    public required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
 }

@@ -9,12 +9,22 @@ import UIKit
 
 public class ZRefreshBackNormalFooter: ZRefreshBackStateFooter {
     
-    private(set) lazy var arrowView = UIImageView()
-    private lazy var loadingView = UIActivityIndicatorView()
+    private(set) lazy var arrowView: UIImageView = {
+        let arrowView = UIImageView()
+        arrowView.image = ZRefreshing.imageOf("arrow.png")
+        return arrowView
+    }()
     
+    private lazy var activityIndicator : UIActivityIndicatorView = {
+        var activityIndicator = UIActivityIndicatorView()
+        activityIndicator.activityIndicatorViewStyle = self.activityIndicatorViewStyle
+        activityIndicator.hidesWhenStopped = true
+        
+        return activityIndicator
+    }()
     public var activityIndicatorViewStyle: UIActivityIndicatorViewStyle = .Gray {
         didSet {
-            self.loadingView.activityIndicatorViewStyle = self.activityIndicatorViewStyle
+            self.activityIndicator.activityIndicatorViewStyle = self.activityIndicatorViewStyle
             self.setNeedsLayout()
         }
     }
@@ -23,15 +33,14 @@ public class ZRefreshBackNormalFooter: ZRefreshBackStateFooter {
     override public func prepare() {
         super.prepare()
         
-        self.arrowView.image = UIImage(named: "ZRefresh.bundle/arrow.png")
         if self.arrowView.superview == nil {
             self.addSubview(self.arrowView)
         }
         
-        self.loadingView.activityIndicatorViewStyle = self.activityIndicatorViewStyle
-        self.loadingView.hidesWhenStopped = true
-        if self.loadingView.superview == nil {
-            self.addSubview(self.loadingView)
+        self.activityIndicator.activityIndicatorViewStyle = self.activityIndicatorViewStyle
+        self.activityIndicator.hidesWhenStopped = true
+        if self.activityIndicator.superview == nil {
+            self.addSubview(self.activityIndicator)
         }
     }
     
@@ -55,8 +64,8 @@ public class ZRefreshBackNormalFooter: ZRefreshBackStateFooter {
             self.arrowView.hidden = true
         }
         
-        if (self.loadingView.constraints.count == 0) {
-            self.loadingView.center = arrowCenter;
+        if (self.activityIndicator.constraints.count == 0) {
+            self.activityIndicator.center = arrowCenter;
         }
     }
     
@@ -69,15 +78,15 @@ public class ZRefreshBackNormalFooter: ZRefreshBackStateFooter {
             if result.1 == .Refreshing {
                 self.arrowView.transform = CGAffineTransformMakeRotation(0.000001 - CGFloat(M_PI))
                 UIView.animateWithDuration(ZRefreshing.fastAnimationDuration, animations: {
-                    self.loadingView.alpha = 0.0
+                    self.activityIndicator.alpha = 0.0
                     }, completion: { (flag) in
-                        self.loadingView.alpha = 1.0
-                        self.loadingView.stopAnimating()
+                        self.activityIndicator.alpha = 1.0
+                        self.activityIndicator.stopAnimating()
                         self.arrowView.hidden = false
                 })
             } else {
                 self.arrowView.hidden = false
-                self.loadingView.stopAnimating()
+                self.activityIndicator.stopAnimating()
                 UIView.animateWithDuration(ZRefreshing.fastAnimationDuration, animations: {
                     self.arrowView.transform = CGAffineTransformMakeRotation(0.000001 - CGFloat(M_PI))
                     }, completion: { (flag) in
@@ -85,16 +94,16 @@ public class ZRefreshBackNormalFooter: ZRefreshBackStateFooter {
             }
         } else if state == .Pulling {
             self.arrowView.hidden = false
-            self.loadingView.stopAnimating()
+            self.activityIndicator.stopAnimating()
             UIView.animateWithDuration(ZRefreshing.fastAnimationDuration, animations: {
                 self.arrowView.transform = CGAffineTransformIdentity
             })
         } else if state == .Refreshing {
             self.arrowView.hidden = true
-            self.loadingView.startAnimating()
+            self.activityIndicator.startAnimating()
         } else if state == .NoMoreData {
             self.arrowView.hidden = true
-            self.loadingView.stopAnimating()
+            self.activityIndicator.stopAnimating()
         }
     }
 }

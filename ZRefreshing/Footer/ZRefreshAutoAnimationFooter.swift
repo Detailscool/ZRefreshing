@@ -9,7 +9,12 @@ import UIKit
 
 public class ZRefreshAutoAnimationFooter: ZRefreshAutoStateFooter {
     
-    private(set) lazy var animationView = UIImageView()
+    private(set) lazy var  animationView: UIImageView = {
+        let animationView = UIImageView()
+        animationView.backgroundColor = UIColor.clearColor()
+        return animationView
+    }()
+    
     private var stateImages: [ZRefreshState: [UIImage]] = [:]
     private var stateDurations: [ZRefreshState: NSTimeInterval] = [:]
     

@@ -9,10 +9,17 @@ import UIKit
 
 public class ZRefreshAutoNormalFooter: ZRefreshAutoStateFooter {
 
-    private(set) lazy var loadingView = UIActivityIndicatorView()
+    private(set) lazy var  activityIndicator : UIActivityIndicatorView = {
+        var activityIndicator = UIActivityIndicatorView()
+        activityIndicator.activityIndicatorViewStyle = self.activityIndicatorViewStyle
+        activityIndicator.hidesWhenStopped = true
+        
+        return activityIndicator
+    }()
+    
     public var activityIndicatorViewStyle: UIActivityIndicatorViewStyle = .Gray {
         didSet {
-            self.loadingView.activityIndicatorViewStyle = self.activityIndicatorViewStyle
+            self.activityIndicator.activityIndicatorViewStyle = self.activityIndicatorViewStyle
             self.setNeedsLayout()
         }
     }
@@ -22,31 +29,31 @@ public class ZRefreshAutoNormalFooter: ZRefreshAutoStateFooter {
         
         self.activityIndicatorViewStyle = .Gray
         
-        self.loadingView.hidesWhenStopped = true
-        if self.loadingView.superview == nil {
-            self.addSubview(self.loadingView)
+        self.activityIndicator.hidesWhenStopped = true
+        if self.activityIndicator.superview == nil {
+            self.addSubview(self.activityIndicator)
         }
     }
     
     override public func placeSubViews() {
         super.placeSubViews()
-        if self.loadingView.constraints.count > 0 { return }
+        if self.activityIndicator.constraints.count > 0 { return }
         
         var loadingCenterX = self.frame.width * 0.5;
         if !self.refreshingTitleHidden {
             loadingCenterX -= 100
         }
         let loadingCenterY = self.frame.height * 0.5;
-        self.loadingView.center = CGPointMake(loadingCenterX, loadingCenterY);
+        self.activityIndicator.center = CGPointMake(loadingCenterX, loadingCenterY);
     }
     
     override public func setRefreshingState(state: ZRefreshState) {
         if self.checkState(state).0 { return }
         super.setRefreshingState(state)
         if state == .NoMoreData || state == .Idle {
-            self.loadingView.stopAnimating()
+            self.activityIndicator.stopAnimating()
         } else if state == .Refreshing {
-            self.loadingView.startAnimating()
+            self.activityIndicator.startAnimating()
         }
     }
 }
