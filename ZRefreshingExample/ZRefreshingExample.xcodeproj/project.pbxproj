@@ -7,31 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		BA39D5701CCF4CEF00FC9719 /* ZRefreshing.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA39D56F1CCF4CE700FC9719 /* ZRefreshing.framework */; };
-		BA39D5711CCF4CEF00FC9719 /* ZRefreshing.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = BA39D56F1CCF4CE700FC9719 /* ZRefreshing.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		BAFCC5DC1CB68C35007C29DE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAFCC5DB1CB68C35007C29DE /* AppDelegate.swift */; };
 		BAFCC5DE1CB68C35007C29DE /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAFCC5DD1CB68C35007C29DE /* ViewController.swift */; };
 		BAFCC5E11CB68C35007C29DE /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BAFCC5DF1CB68C35007C29DE /* Main.storyboard */; };
 		BAFCC5E31CB68C35007C29DE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BAFCC5E21CB68C35007C29DE /* Assets.xcassets */; };
 		BAFCC5E61CB68C36007C29DE /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BAFCC5E41CB68C36007C29DE /* LaunchScreen.storyboard */; };
 /* End PBXBuildFile section */
-
-/* Begin PBXContainerItemProxy section */
-		BA39D56E1CCF4CE700FC9719 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = BA39D56A1CCF4CE700FC9719 /* ZRefreshing.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = BAFCC5F71CB68C4F007C29DE;
-			remoteInfo = ZRefreshing;
-		};
-		BA39D5721CCF4CEF00FC9719 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = BA39D56A1CCF4CE700FC9719 /* ZRefreshing.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = BAFCC5F61CB68C4F007C29DE;
-			remoteInfo = ZRefreshing;
-		};
-/* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
 		BA39D5741CCF4CEF00FC9719 /* Embed Frameworks */ = {
@@ -40,7 +21,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				BA39D5711CCF4CEF00FC9719 /* ZRefreshing.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -51,7 +31,6 @@
 		AA517CDF496F6D9AEE72B936 /* Pods-ZRefreshingExample.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ZRefreshingExample.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ZRefreshingExample/Pods-ZRefreshingExample.debug.xcconfig"; sourceTree = "<group>"; };
 		B00DF55C1D18447C4F483450 /* Pods-ZRefreshingExample.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ZRefreshingExample.release.xcconfig"; path = "Pods/Target Support Files/Pods-ZRefreshingExample/Pods-ZRefreshingExample.release.xcconfig"; sourceTree = "<group>"; };
 		BA07C06F85C7A837579CED44 /* Pods_ZRefreshingExample.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ZRefreshingExample.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		BA39D56A1CCF4CE700FC9719 /* ZRefreshing.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ZRefreshing.xcodeproj; path = ../../ZRefreshing.xcodeproj; sourceTree = "<group>"; };
 		BAFCC5D81CB68C35007C29DE /* ZRefreshingExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ZRefreshingExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BAFCC5DB1CB68C35007C29DE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		BAFCC5DD1CB68C35007C29DE /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -66,7 +45,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BA39D5701CCF4CEF00FC9719 /* ZRefreshing.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -80,14 +58,6 @@
 				B00DF55C1D18447C4F483450 /* Pods-ZRefreshingExample.release.xcconfig */,
 			);
 			name = Pods;
-			sourceTree = "<group>";
-		};
-		BA39D56B1CCF4CE700FC9719 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				BA39D56F1CCF4CE700FC9719 /* ZRefreshing.framework */,
-			);
-			name = Products;
 			sourceTree = "<group>";
 		};
 		BAFCC5CF1CB68C35007C29DE = {
@@ -111,7 +81,6 @@
 		BAFCC5DA1CB68C35007C29DE /* ZRefreshingExample */ = {
 			isa = PBXGroup;
 			children = (
-				BA39D56A1CCF4CE700FC9719 /* ZRefreshing.xcodeproj */,
 				BAFCC5DB1CB68C35007C29DE /* AppDelegate.swift */,
 				BAFCC5DD1CB68C35007C29DE /* ViewController.swift */,
 				BAFCC5DF1CB68C35007C29DE /* Main.storyboard */,
@@ -148,7 +117,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				BA39D5731CCF4CEF00FC9719 /* PBXTargetDependency */,
 			);
 			name = ZRefreshingExample;
 			productName = ZRefreshingExample;
@@ -181,28 +149,12 @@
 			mainGroup = BAFCC5CF1CB68C35007C29DE;
 			productRefGroup = BAFCC5D91CB68C35007C29DE /* Products */;
 			projectDirPath = "";
-			projectReferences = (
-				{
-					ProductGroup = BA39D56B1CCF4CE700FC9719 /* Products */;
-					ProjectRef = BA39D56A1CCF4CE700FC9719 /* ZRefreshing.xcodeproj */;
-				},
-			);
 			projectRoot = "";
 			targets = (
 				BAFCC5D71CB68C35007C29DE /* ZRefreshingExample */,
 			);
 		};
 /* End PBXProject section */
-
-/* Begin PBXReferenceProxy section */
-		BA39D56F1CCF4CE700FC9719 /* ZRefreshing.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = ZRefreshing.framework;
-			remoteRef = BA39D56E1CCF4CE700FC9719 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		BAFCC5D61CB68C35007C29DE /* Resources */ = {
@@ -276,14 +228,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		BA39D5731CCF4CEF00FC9719 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = ZRefreshing;
-			targetProxy = BA39D5721CCF4CEF00FC9719 /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		BAFCC5DF1CB68C35007C29DE /* Main.storyboard */ = {

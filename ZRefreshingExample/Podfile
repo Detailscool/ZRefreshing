@@ -2,6 +2,6 @@ platform :ios, '8.0'
 use_frameworks!
 
 target 'ZRefreshingExample' do
-#    pod 'ZRefreshing', '~>1.2.1'
+    pod 'ZRefreshing', '~>1.2.1'
 end
 
