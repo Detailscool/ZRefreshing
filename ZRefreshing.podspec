@@ -9,7 +9,7 @@
 Pod::Spec.new do |s|
 
   s.name         = "ZRefreshing"
-  s.version      = "1.2.2"
+  s.version      = "1.2.3"
   s.summary      = "ZRefreshing is a simple swift Refreshing Control for Tableview or CollectionView."
 
   s.description  = <<-DESC
