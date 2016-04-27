@@ -12,12 +12,11 @@ import ZRefreshing
 class ViewController: UITableViewController {
 
     private var numberOfCell: Int = 20
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         self.tableView.registerClass(UITableViewCell.classForCoder(), forCellReuseIdentifier: "Cell")
-        
+        self.tableView.header = ZRefreshNormalHeader(target: self, action: #selector(self.loadData(_:)));
         self.tableView.header = ZRefreshNormalHeader(refreshClosure: {
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, Int64(1.5 * Double(NSEC_PER_SEC))), dispatch_get_main_queue(), {
                 self.tableView.header?.endRefreshing()
@@ -26,7 +25,7 @@ class ViewController: UITableViewController {
         self.tableView.header?.beginRefreshing()
     }
 
-    func loadData() {
+    func loadData(componet: ZRefreshComponent) {
         
     }
     
