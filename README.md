@@ -25,37 +25,46 @@ run pod install
 ```
 
 # Usage 
-### 1.add header into your tableView
+### 1. add header into your tableView
 ``` bash
-1.self.tableView.header = ZRefreshNormalHeader(target: self, action: #selector(self.loadData(_:)))
+1. self.tableView.header = ZRefreshNormalHeader(target: self, action: #selector(self.loadData(_:)))
 
-2.self.tableView.header = ZRefreshNormalHeader(refreshClosure: {
+2. self.tableView.header = ZRefreshNormalHeader({
 })
 ```
-### 2.add auto footer into your tableView 
+### 2. add auto footer into your tableView 
 ``` bash
-1.self.tableView.footer = ZRefreshAutoFooter(target: self, action: #selector(self.loadData(_:)))
+1. self.tableView.footer = ZRefreshAutoFooter(target: self, action: #selector(self.loadData(_:)))
 
-2.self.tableView.footer = ZRefreshAutoFooter(refreshClosure: {
+2. self.tableView.footer = ZRefreshAutoFooter({
 })
 ```
-### 3.add normal footer into your tableView
+### 3. add normal footer into your tableView
 ``` bash
-1.self.tableView.footer = ZRefreshBackFooter(target: self, action: #selector(self.loadData(_:)));
+1. self.tableView.footer = ZRefreshBackFooter(target: self, action: #selector(self.loadData(_:)));
 
-2.self.tableView.footer = ZRefreshBackFooter(refreshClosure: {
+2. self.tableView.footer = ZRefreshBackFooter({
 })
 ```
-### 4.hidden the last update label 
+### 4. start refreshing
+``` bash
+self.tableView.header?.beginRefreshing()
+```
+### 5. stop refreshing
+``` bash
+self.tableView.header?.endRefreshing()
+```
+### 6. hidden the last update label 
 ``` bash 
 header.lastUpdatedTimeLabel.hidden = true
 ```
-### 5.hidden the state label 
+### 7. hidden the state label 
 ``` bash
-for header:
+1. header:
 header.stateLabel.hidden = true
-for footer:
+2. footer:
 footer.stateLabel.hidden = true
 ```
+
 
 
