@@ -22,10 +22,6 @@ public class ZRefreshFooter: ZRefreshComponent {
         super.willMoveToSuperview(newSuperview)
         if self.scrollView == nil { return }
         
-        if self.scrollView!.totalDataCount == 0 {
-            self.setFooterHidden(true)
-        }
-        
         if (self.scrollView!.isKindOfClass(UITableView.classForCoder()) || self.scrollView!.isKindOfClass(UICollectionView.classForCoder())) {
             self.scrollView?.reloadDataClosure = { (value) in
                 self.setFooterHidden(value == 0)

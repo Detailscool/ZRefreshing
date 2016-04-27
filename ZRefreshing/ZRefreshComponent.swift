@@ -45,7 +45,7 @@ public class ZRefreshComponent: UIView {
     }
     
     // MARK: - public initialized
-    public required init(refreshClosure: ZRefreshClosure) {
+    public required init(_ refreshClosure: ZRefreshClosure) {
         super.init(frame: CGRectZero)
         self.refreshClosure = refreshClosure
         self.prepare()

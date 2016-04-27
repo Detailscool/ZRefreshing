@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3263ED382B780A816CA22FC2 /* Pods_ZRefreshingExample.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA07C06F85C7A837579CED44 /* Pods_ZRefreshingExample.framework */; };
 		BAB98C741CD0BDDC00536828 /* ZRefreshing.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BAB98C731CD0BC4A00536828 /* ZRefreshing.framework */; };
 		BAB98C751CD0BDDC00536828 /* ZRefreshing.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = BAB98C731CD0BC4A00536828 /* ZRefreshing.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		BAFCC5DC1CB68C35007C29DE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAFCC5DB1CB68C35007C29DE /* AppDelegate.swift */; };
@@ -67,6 +68,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				BAB98C741CD0BDDC00536828 /* ZRefreshing.framework in Frameworks */,
+				3263ED382B780A816CA22FC2 /* Pods_ZRefreshingExample.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

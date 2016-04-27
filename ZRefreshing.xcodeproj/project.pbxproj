@@ -108,8 +108,8 @@
 			children = (
 				BAFCC6371CB6A42A007C29DE /* ZRefreshAutoAnimationFooter.swift */,
 				BAFCC6381CB6A42A007C29DE /* ZRefreshAutoFooter.swift */,
-				BAFCC6391CB6A42A007C29DE /* ZRefreshAutoNormalFooter.swift */,
 				BAFCC63A1CB6A42A007C29DE /* ZRefreshAutoStateFooter.swift */,
+				BAFCC6391CB6A42A007C29DE /* ZRefreshAutoNormalFooter.swift */,
 				BAFCC63B1CB6A42A007C29DE /* ZRefreshBackAnimationFooter.swift */,
 				BAFCC63C1CB6A42A007C29DE /* ZRefreshBackFooter.swift */,
 				BAFCC63D1CB6A42A007C29DE /* ZRefreshBackNormalFooter.swift */,

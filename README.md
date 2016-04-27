@@ -52,7 +52,15 @@ self.tableView.header?.beginRefreshing()
 ```
 ### 5. stop refreshing
 ``` bash
+1. header
 self.tableView.header?.endRefreshing()
+2. footer
+self.tableView.footer?.endRefreshing()
+self.tableView.footer?.endRefreshingWithNoMoreData()
+```
+note: you can use following function reset the refresh state
+``` bash
+self.tableView.footer?.resetNoMoreData()
 ```
 ### 6. hidden the last update label 
 ``` bash 

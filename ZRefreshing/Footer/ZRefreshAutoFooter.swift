@@ -88,12 +88,15 @@ public class ZRefreshAutoFooter: ZRefreshFooter {
     
     override public func setFooterHidden(hidden: Bool) {
         let isHidden = self.hidden
-        self.hidden = hidden
         
+        print("is Hidden : \(isHidden)")
+        print("hidden : \(hidden)")
+        self.hidden = hidden
+
         if !isHidden && hidden {
             self.setRefreshingState(.Idle)
             self.scrollView?.contentInset.bottom -= self.frame.height
-        } else {
+        } else if (isHidden && !hidden) {
             self.scrollView?.contentInset.bottom += self.frame.height
             self.frame.origin.y = self.scrollView!.contentSize.height
         }
