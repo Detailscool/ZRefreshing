@@ -25,38 +25,33 @@ run pod install
 ```
 
 # Usage 
-### add header into your tableView
+### 1.add header into your tableView
 ``` bash
 1.self.tableView.header = ZRefreshNormalHeader(target: self, action: #selector(self.loadData(_:)));
 2.self.tableView.header = ZRefreshNormalHeader(refreshClosure: {
 })
 ```
-</br>
-### add auto footer into your tableView 
+### 2.add auto footer into your tableView 
 ``` bash
 1.self.tableView.footer = ZRefreshAutoFooter(target: self, action: #selector(self.loadData(_:)));
 2.self.tableView.footer = ZRefreshAutoFooter(refreshClosure: {
 })
 ```
-</br>
-### add normal footer into your tableView
+### 3.add normal footer into your tableView
 ``` bash
 1.self.tableView.footer = ZRefreshBackFooter(target: self, action: #selector(self.loadData(_:)));
 
 2.self.tableView.footer = ZRefreshBackFooter(refreshClosure: {
 })
 ```
-</br>
-### hidden the last update label 
+### 4.hidden the last update label 
 ``` bash 
 header.lastUpdatedTimeLabel.hidden = true
 ```
-</br>
-### hidden the state label 
+### 5.hidden the state label 
 ``` bash
 1.header.stateLabel.hidden = true
 2.footer.stateLabel.hidden = true
 ```
-</br>
 
 
