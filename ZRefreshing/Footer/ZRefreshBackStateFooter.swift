@@ -9,7 +9,7 @@ import UIKit
 
 public class ZRefreshBackStateFooter: ZRefreshBackFooter {
     
-    private(set) lazy var stateLabel = ZRefreshingLabel()
+    public private(set) lazy var stateLabel = ZRefreshingLabel()
     private var stateTitles:[ZRefreshState: String] = [:]
     
     public func setTitle(title: String?, forState state: ZRefreshState) {

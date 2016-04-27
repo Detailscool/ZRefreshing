@@ -16,13 +16,26 @@ class ViewController: UITableViewController {
         super.viewDidLoad()
         
         self.tableView.registerClass(UITableViewCell.classForCoder(), forCellReuseIdentifier: "Cell")
-        self.tableView.header = ZRefreshNormalHeader(target: self, action: #selector(self.loadData(_:)));
-        self.tableView.header = ZRefreshNormalHeader(refreshClosure: {
+//        self.tableView.header = ZRefreshNormalHeader(target: self, action: #selector(self.loadData(_:)));
+        let header = ZRefreshNormalHeader(refreshClosure: {
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, Int64(1.5 * Double(NSEC_PER_SEC))), dispatch_get_main_queue(), {
                 self.tableView.header?.endRefreshing()
             })
         })
-        self.tableView.header?.beginRefreshing()
+//        header.stateLabel.hidden = true
+//        header.lastUpdatedTimeLabel.hidden = true
+//        self.tableView.header = header
+//
+//        self.tableView.footer = ZRefreshBackFooter(target: self, action: #selector(self.loadData(_:)));
+        let footer = ZRefreshAutoNormalFooter(refreshClosure: {
+            self.tableView.footer?.endRefreshingWithNoMoreData()
+        })
+        
+        footer.refreshingTitleHidden = true
+
+        self.tableView.footer = footer
+//
+//        self.tableView.header?.beginRefreshing()
     }
 
     func loadData(componet: ZRefreshComponent) {
