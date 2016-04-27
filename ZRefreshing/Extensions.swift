@@ -42,9 +42,9 @@ public extension UIScrollView {
             if (self.header != newValue) {
                 self.header?.removeFromSuperview()
                 if newValue != nil { self.insertSubview(newValue!, atIndex: 0) }
-                self.willChangeValueForKey("com.zero.header")
+                self.willChangeValueForKey("com.zevwings.value.header")
                 objc_setAssociatedObject(self, &headerAssociationKey, newValue, .OBJC_ASSOCIATION_RETAIN)
-                self.didChangeValueForKey("com.zero.header")
+                self.didChangeValueForKey("com.zevwings.value.header")
             }
         }
     }
@@ -57,9 +57,9 @@ public extension UIScrollView {
             if (self.footer != newValue) {
                 self.footer?.removeFromSuperview()
                 if newValue != nil { self.insertSubview(newValue!, atIndex: 0) }
-                self.willChangeValueForKey("com.zero.footer")
+                self.willChangeValueForKey("com.zevwings.value.footer")
                 objc_setAssociatedObject(self, &footerAssociationKey, newValue, .OBJC_ASSOCIATION_RETAIN)
-                self.didChangeValueForKey("com.zero.footer")
+                self.didChangeValueForKey("com.zevwings.value.footer")
             }
         }
     }
