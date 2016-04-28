@@ -27,7 +27,7 @@ run pod install
 # Usage 
 ## Header
 
-##### * add header into your tableView
+#### add header into your tableView
 ``` bash
 var header = ZRefreshNormalHeader(target: self, action: #selector(self.loadData(_:)))
 var header = ZRefreshNormalHeader({
@@ -35,32 +35,32 @@ var header = ZRefreshNormalHeader({
 self.tableView.header = header
 ```
 
-##### * start refreshing
+#### start refreshing
 ``` bash
 self.tableView.header?.beginRefreshing()
 ```
-##### * stop refreshing
+#### stop refreshing
 ``` bash
 self.tableView.header?.endRefreshing()
 ```
-* 4. hidden the last update label 
+#### hidden the last update label 
 ``` bash 
 header.lastUpdatedTimeLabelHidden = true
 ```
-* 5. hidden the state label 
+#### hidden the state label 
 ``` bash
 header.stateLabelHidden = true
 ```
-* 6. store the time with the custom key 
+#### store the time with the custom key 
 ``` bash
 header.lastUpdatedTimeKey = "custom key"
 ```
-* 7. when you set a contentInset, you need set a ignored height
+#### when you set a contentInset, you need set a ignored height
 ``` bash
 self.tableView.contentInset = UIEdgeInsetsMake(30, 0, 0, 0)
 header?.ignoredScrollViewContentInsetTop = 30
 ```
-* 8. also, you can set the indicator style
+#### also, you can set the indicator style
 ``` bash 
 self.header.activityIndicatorViewStyle = .WhiteLarge
 ```
