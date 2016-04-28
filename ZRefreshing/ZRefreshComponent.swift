@@ -7,22 +7,37 @@
 
 import UIKit
 
+private var stateAssocaiationkey = "com.zero.refreshing.storage.state"
 public class ZRefreshComponent: UIView {
     
     private var pan: UIPanGestureRecognizer?
     private var target: AnyObject?
     private var action: Selector?
+    private var refreshClosure: ZRefreshClosure?
     
-    internal var refreshClosure: ZRefreshClosure?
-    internal var state : ZRefreshState = .Idle
     internal var scrollViewOriginalInset: UIEdgeInsets = UIEdgeInsetsZero
     internal var scrollView: UIScrollView?
+    
+    internal var state: ZRefreshState {
+        get {
+            let stateString = objc_getAssociatedObject(self, &stateAssocaiationkey) as? String
+            let state = ZRefreshState.fromString(stateString ?? "")
+            return state
+        }
+        set {
+            if self.isSameStateForNewValue(newValue).result { return }
+            objc_setAssociatedObject(self,
+                                     &stateAssocaiationkey,
+                                     newValue.toString(),
+                                     .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+        }
+    }
     
     internal var automaticallyChangeAlpha: Bool = false {
         didSet {
             if self.isRefreshing { return }
             
-            if (automaticallyChangeAlpha) {
+            if self.automaticallyChangeAlpha {
                 self.alpha = self.pullingPercent;
             } else {
                 self.alpha = 1.0;
@@ -30,7 +45,7 @@ public class ZRefreshComponent: UIView {
         }
     }
     
-    public var pullingPercent: CGFloat = 0.0 {
+    internal var pullingPercent: CGFloat = 0.0 {
         didSet {
             if self.isRefreshing { return }
             if self.automaticallyChangeAlpha {
@@ -39,12 +54,11 @@ public class ZRefreshComponent: UIView {
         }
     }
 
-    // determine if the component is to refresh the status
     public var isRefreshing: Bool {
-        return self.state == .Refreshing || self.state == .WillRefresh
+        return (self.state == .Refreshing || self.state == .WillRefresh)
     }
     
-    // MARK: - public initialized
+    //MARK: - public initialized
     public required init(_ refreshClosure: ZRefreshClosure) {
         super.init(frame: CGRectZero)
         self.refreshClosure = refreshClosure
@@ -63,29 +77,39 @@ public class ZRefreshComponent: UIView {
         super.init(coder: aDecoder)
     }
     
-    // MARK: - Component Control
+    //MARK: - Component Control
     public func beginRefreshing() {
         
         UIView.animateWithDuration(ZRefreshing.fastAnimationDuration) {
             self.alpha = 1.0
         }
+        
         self.pullingPercent = 1.0
+        
         if self.window != nil {
-            self.setRefreshingState(.Refreshing)
+            self.state = .Refreshing
         } else {
             if self.state != .Refreshing {
-                self.setRefreshingState(.WillRefresh)
+                self.state = .WillRefresh
                 self.setNeedsDisplay()
             }
         }
     }
     
     public func endRefreshing() {
-        self.setRefreshingState(.Idle)
+        self.state = .Idle
     }
     
-    // MARK: - Override
-    override public func willMoveToSuperview(newSuperview: UIView?) {
+    // check the new state is the same to old value or not
+    internal func isSameStateForNewValue(state: ZRefreshState) -> ZRefreshCheckStateResutlt {
+        if self.state == state {
+            return (result: true, state: self.state)
+        }
+        return (result: false, state: self.state)
+    }
+    
+    //MARK: - Override Super Class Methods
+    public override func willMoveToSuperview(newSuperview: UIView?) {
         super.willMoveToSuperview(newSuperview)
         
         if newSuperview == nil || !newSuperview!.isKindOfClass(UIScrollView.classForCoder()) {
@@ -108,7 +132,7 @@ public class ZRefreshComponent: UIView {
         }
     }
     
-    override public func observeValueForKeyPath(keyPath: String?, ofObject object: AnyObject?, change: [String : AnyObject]?, context: UnsafeMutablePointer<Void>) {
+    public override func observeValueForKeyPath(keyPath: String?, ofObject object: AnyObject?, change: [String : AnyObject]?, context: UnsafeMutablePointer<Void>) {
         if !self.userInteractionEnabled {
             return
         }
@@ -126,19 +150,19 @@ public class ZRefreshComponent: UIView {
         }
     }
     
-    override public func drawRect(rect: CGRect) {
+    public override func drawRect(rect: CGRect) {
         super.drawRect(rect)
         if self.state == .WillRefresh {
-            self.setRefreshingState(.Refreshing)
+            self.state = .Refreshing
         }
     }
     
-    override public func layoutSubviews() {
+    public override func layoutSubviews() {
         super.layoutSubviews()
         self.placeSubViews()
     }
     
-    // MARK: - Private
+    // MARK: - Internal and Private Classes
     internal func executeRefreshCallback() {
         dispatch_async(dispatch_get_main_queue()) {
             self.refreshClosure?()
@@ -183,17 +207,5 @@ public class ZRefreshComponent: UIView {
     public func scrollViewContentSizeDidChange(change: [String: AnyObject]?) {}
     public func scrollViewPanStateDidChange(change: [String: AnyObject]?) {}
     
-    public func setRefreshingState(state: ZRefreshState) {
-        if self.checkState(state).0 {
-            return
-        }
-        self.state = state
-    }
     
-    public func checkState(state: ZRefreshState) -> ZRefreshCheckStateResutlt {
-        if self.state == state {
-            return (result: true, state: self.state)
-        }
-        return (result: false, state: self.state)
-    }
 }

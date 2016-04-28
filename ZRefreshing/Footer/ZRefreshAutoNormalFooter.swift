@@ -24,6 +24,21 @@ public class ZRefreshAutoNormalFooter: ZRefreshAutoStateFooter {
         }
     }
     
+    override var state: ZRefreshState {
+        get {
+            return super.state
+        }
+        set (newState) {
+            if self.isSameStateForNewValue(newState).result { return }
+            super.state = newState
+            if newState == .NoMoreData || newState == .Idle {
+                self.activityIndicator.stopAnimating()
+            } else if newState == .Refreshing {
+                self.activityIndicator.startAnimating()
+            }
+        }
+    }
+    
     override public func prepare() {
         super.prepare()
         
@@ -40,20 +55,10 @@ public class ZRefreshAutoNormalFooter: ZRefreshAutoStateFooter {
         if self.activityIndicator.constraints.count > 0 { return }
         
         var loadingCenterX = self.frame.width * 0.5;
-        if !self.refreshingTitleHidden {
+        if !self.stateLabel.hidden {
             loadingCenterX -= 100
         }
         let loadingCenterY = self.frame.height * 0.5;
         self.activityIndicator.center = CGPointMake(loadingCenterX, loadingCenterY);
-    }
-    
-    override public func setRefreshingState(state: ZRefreshState) {
-        if self.checkState(state).0 { return }
-        super.setRefreshingState(state)
-        if state == .NoMoreData || state == .Idle {
-            self.activityIndicator.stopAnimating()
-        } else if state == .Refreshing {
-            self.activityIndicator.startAnimating()
-        }
     }
 }

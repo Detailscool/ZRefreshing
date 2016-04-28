@@ -17,8 +17,29 @@ public class ZRefreshStateHeader: ZRefreshHeader {
     private var currentCalendar: NSCalendar? = NSCalendar(calendarIdentifier: NSCalendarIdentifierGregorian)
     private var lastUpdatedTimeText:((date: NSDate?)->(String))?
     
-    override public var lastUpdatedTimeKey: String {
+    public var lastUpdatedTimeLabelHidden: Bool = false {
+        didSet {
+            self.lastUpdatedTimeLabel.hidden = hidden
+        }
+    }
+    
+    override var state: ZRefreshState {
+        get {
+            return super.state
+        }
         
+        set (newState) {
+            if self.isSameStateForNewValue(newState).result { return }
+            super.state = newState
+            self.stateLabel.text = self.stateTitles[self.state];
+            
+            // call lastUpdatedTimeKey set function
+            let key = self.lastUpdatedTimeKey
+            self.lastUpdatedTimeKey = key
+        }
+    }
+    
+    public override var lastUpdatedTimeKey: String {
         didSet {
             let lastUpdatedTime = NSUserDefaults.standardUserDefaults().objectForKey(self.lastUpdatedTimeKey) as? NSDate
             if self.lastUpdatedTimeText != nil {
@@ -32,7 +53,7 @@ public class ZRefreshStateHeader: ZRefreshHeader {
                 let formatter = NSDateFormatter()
                 if cmp1!.day == cmp2!.day {
                     formatter.dateFormat = "今天 HH:mm"
-                } else if (cmp1!.year == cmp2!.year) {
+                } else if cmp1!.year == cmp2!.year {
                     formatter.dateFormat = "MM-dd HH:mm"
                 } else {
                     formatter.dateFormat = "yyyy-MM-dd HH:mm"
@@ -49,10 +70,6 @@ public class ZRefreshStateHeader: ZRefreshHeader {
         if title == nil {return}
         self.stateTitles.updateValue(title!, forKey: state)
         self.stateLabel.text = self.stateTitles[self.state]
-    }
-    
-    public func setLastUpdatedTimeLabelHidden(hidden: Bool) {
-        self.lastUpdatedTimeLabel.hidden = hidden
     }
     
     override public func prepare() {
@@ -82,7 +99,7 @@ public class ZRefreshStateHeader: ZRefreshHeader {
         
         let noConstrainsOnStatusLabel = self.stateLabel.constraints.count == 0
 
-        if (self.lastUpdatedTimeLabel.hidden) {
+        if self.lastUpdatedTimeLabel.hidden {
             if noConstrainsOnStatusLabel { self.stateLabel.frame = self.bounds }
         } else {
             let statusLabelH = self.frame.height * 0.5
@@ -90,7 +107,7 @@ public class ZRefreshStateHeader: ZRefreshHeader {
             self.stateLabel.frame.origin.y = 0
             self.stateLabel.frame.size.width = self.frame.width
             self.stateLabel.frame.size.height = statusLabelH
-            if (self.lastUpdatedTimeLabel.constraints.count == 0) {
+            if self.lastUpdatedTimeLabel.constraints.count == 0 {
                 
                 self.lastUpdatedTimeLabel.frame.origin.x = 0
                 self.lastUpdatedTimeLabel.frame.origin.y = statusLabelH
@@ -98,15 +115,5 @@ public class ZRefreshStateHeader: ZRefreshHeader {
                 self.lastUpdatedTimeLabel.frame.size.height = self.frame.height - self.lastUpdatedTimeLabel.frame.origin.y;
             }
         }
-    }
-    
-    override public func setRefreshingState(state: ZRefreshState) {
-        if self.checkState(state).0 {
-            return
-        }
-        super.setRefreshingState(state)
-        self.stateLabel.text = self.stateTitles[self.state];
-        let key = self.lastUpdatedTimeKey
-        self.lastUpdatedTimeKey = key
     }
 }

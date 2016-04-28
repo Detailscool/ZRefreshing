@@ -27,7 +27,6 @@ public class ZRefreshingLabel: UILabel {
     }
 }
 
-
 private var headerAssociationKey: UInt8 = 0
 private var footerAssociationKey: UInt8 = 0
 private var reloadDataClosureKey: UInt8 = 0

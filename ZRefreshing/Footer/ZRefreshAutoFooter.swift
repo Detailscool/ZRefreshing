@@ -11,7 +11,43 @@ public class ZRefreshAutoFooter: ZRefreshFooter {
 
     public var automaticallyRefresh: Bool = true
     private var triggerAutomaticallyRefreshPercent: CGFloat = 1.0
-
+    
+    override var state: ZRefreshState {
+        get {
+            return super.state
+        }
+        set (newState) {
+            if self.isSameStateForNewValue(newState).result { return }
+            super.state = newState
+            
+            if newState == .Refreshing {
+                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, Int64(0.5 * Double(NSEC_PER_SEC))), dispatch_get_main_queue(), {
+                    self.executeRefreshCallback()
+                })
+            }
+        }/* else if self.state == .NoMoreData && self.automaticallyHidden {
+         self.setFooterHidden(true)
+         }*/
+    }
+    
+    public override var hidden: Bool {
+        get {
+            return super.hidden
+        }
+        set {
+            let isHidden = self.hidden;
+            super.hidden = newValue
+            if !isHidden && hidden {
+                self.state = .Idle
+                self.scrollView?.contentInset.bottom -= self.frame.height
+            } else {
+                self.scrollView?.contentInset.bottom += self.frame.height
+                self.frame.origin.y = self.scrollView!.contentSize.height
+            }
+        }
+    }
+    
+    
     override public func willMoveToSuperview(newSuperview: UIView?) {
         super.willMoveToSuperview(newSuperview)
         
@@ -72,33 +108,6 @@ public class ZRefreshAutoFooter: ZRefreshFooter {
                     }
                 }
             }
-        }
-    }
-    
-    override public func setRefreshingState(state: ZRefreshState) {
-        if self.checkState(state).0 { return }
-        super.setRefreshingState(state)
-        
-        if self.state == .Refreshing {
-            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, Int64(0.5 * Double(NSEC_PER_SEC))), dispatch_get_main_queue(), { 
-                self.executeRefreshCallback()
-            })
-        }
-    }
-    
-    override public func setFooterHidden(hidden: Bool) {
-        let isHidden = self.hidden
-        
-        print("is Hidden : \(isHidden)")
-        print("hidden : \(hidden)")
-        self.hidden = hidden
-
-        if !isHidden && hidden {
-            self.setRefreshingState(.Idle)
-            self.scrollView?.contentInset.bottom -= self.frame.height
-        } else if (isHidden && !hidden) {
-            self.scrollView?.contentInset.bottom += self.frame.height
-            self.frame.origin.y = self.scrollView!.contentSize.height
         }
     }
 }

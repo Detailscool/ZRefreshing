@@ -14,10 +14,11 @@ public class ZRefreshAnimationHeader: ZRefreshStateHeader {
         animationView.backgroundColor = UIColor.clearColor()
         return animationView
     }()
+    
     private var stateImages: [ZRefreshState: [UIImage]] = [:]
     private var stateDurations: [ZRefreshState: NSTimeInterval] = [:]
-    
-    override public var pullingPercent: CGFloat {
+
+    override var pullingPercent: CGFloat {
         didSet {
             let imgs = self.stateImages[.Idle] ?? []
             if self.state != .Idle || imgs.count == 0 { return }
@@ -27,6 +28,31 @@ public class ZRefreshAnimationHeader: ZRefreshStateHeader {
                 index = imgs.count - 1
             }
             self.animationView.image = imgs[index]
+        }
+    }
+    
+    override var state: ZRefreshState {
+        get {
+            return super.state
+        }
+        set (newState) {
+            if self.isSameStateForNewValue(newState).result { return }
+            super.state = newState
+            
+            if newState == .Pulling || newState == .Refreshing {
+                let images = self.stateImages[state]
+                if images?.count == 0 { return }
+                self.animationView.stopAnimating()
+                if images?.count == 1{
+                    self.animationView.image = images?.last
+                } else {
+                    self.animationView.animationImages = images
+                    self.animationView.animationDuration = self.stateDurations[state] ?? 0.0
+                    self.animationView.startAnimating()
+                }
+            } else if newState == .Idle {
+                self.animationView.stopAnimating()
+            }
         }
     }
     
@@ -62,26 +88,6 @@ public class ZRefreshAnimationHeader: ZRefreshStateHeader {
         } else {
             self.animationView.contentMode = .Right
             self.animationView.frame.size.width = self.frame.width * 0.5 - 90
-        }
-    }
-    
-    override public func setRefreshingState(state: ZRefreshState) {
-        if self.checkState(state).0 { return }
-        super.setRefreshingState(state)
-        
-        if state == .Pulling || state == .Refreshing {
-            let images = self.stateImages[state]
-            if images?.count == 0 { return }
-            self.animationView.stopAnimating()
-            if images?.count == 1{
-                self.animationView.image = images?.last
-            } else {
-                self.animationView.animationImages = images
-                self.animationView.animationDuration = self.stateDurations[state] ?? 0.0
-                self.animationView.startAnimating()
-            }
-        } else if state == .Idle {
-            self.animationView.stopAnimating()
         }
     }
 }

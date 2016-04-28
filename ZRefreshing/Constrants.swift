@@ -52,8 +52,40 @@ public enum ZRefreshState {
     case Refreshing
     case WillRefresh
     case NoMoreData
+    
+    internal func toString() -> String {
+        switch self {
+        case .Idle:
+            return ".Idle"
+        case .Pulling:
+            return ".Pulling"
+        case .Refreshing:
+            return ".Refreshing"
+        case .WillRefresh:
+            return ".WillRefresh"
+        case .NoMoreData:
+            return ".NoMoreData"
+        }
+    }
+    
+    internal static func fromString(state: String) -> ZRefreshState {
+        switch state {
+        case ".Idle":
+            return .Idle
+        case ".Pulling":
+            return .Pulling
+        case ".Refreshing":
+            return .Refreshing
+        case ".WillRefresh":
+            return .WillRefresh
+        case ".NoMoreData":
+            return .NoMoreData
+        default:
+            return .Idle
+        }
+    }
 }
 
 public typealias ZRefreshClosure = () -> ()
 internal typealias ZReloadDataClosure = @convention(block) (value: Int) -> ()
-public typealias ZRefreshCheckStateResutlt = (result: Bool, state: ZRefreshState)
+internal typealias ZRefreshCheckStateResutlt = (result: Bool, state: ZRefreshState)

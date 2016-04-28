@@ -17,48 +17,54 @@ public class ZRefreshHeader: ZRefreshComponent {
     private var insetTDelta: CGFloat = 0.0
     private var ignoredScrollViewContentInsetTop: CGFloat = 0.0
 
-    override public func prepare() {
-        super.prepare()
-        self.lastUpdatedTimeKey = ZRefreshing.headerLastUpdatedTimeKey
-        self.frame.size.height = ZRefreshing.headerHeight
-    }
-
-    override public func placeSubViews() {
-        super.placeSubViews()
-        self.frame.origin.y = -self.frame.height - self.ignoredScrollViewContentInsetTop
-    }
-
-    override public func setRefreshingState(state: ZRefreshState) {
-        let result = self.checkState(state)
-        if result.0 { return }
-        
-        super.setRefreshingState(state)
-        
-        if (self.state == .Idle) {
-            if result.1 != .Refreshing { return }
+    override var state: ZRefreshState {
+        get {
+            return super.state
+        }
+        set (newState) {
+            let result = self.isSameStateForNewValue(newState)
+            if result.result { return }
+            super.state = newState
             
-            NSUserDefaults.standardUserDefaults().setObject(NSDate(), forKey: self.lastUpdatedTimeKey)
-            NSUserDefaults.standardUserDefaults().synchronize()
-            
-            UIView.animateWithDuration(ZRefreshing.slowAnimationDuration, animations: {
-                self.scrollView?.contentInset.top += self.insetTDelta
-                if self.automaticallyChangeAlpha {
-                    self.alpha = 0.0
-                }
-            }, completion: { (complection) in
-                self.pullingPercent = 0.0
-            })
-        } else if (state == .Refreshing) {
-            UIView.animateWithDuration(ZRefreshing.slowAnimationDuration, animations: {
-                let top = self.scrollViewOriginalInset.top + self.frame.height
-                self.scrollView?.contentInset.top = top
-                self.scrollView?.contentOffset.y = -top
-            }, completion: { (completion) in
-                self.executeRefreshCallback()
-            })
+            if newState == .Idle {
+                if result.state != .Refreshing { return }
+                
+                NSUserDefaults.standardUserDefaults().setObject(NSDate(), forKey: self.lastUpdatedTimeKey)
+                NSUserDefaults.standardUserDefaults().synchronize()
+                
+                UIView.animateWithDuration(ZRefreshing.slowAnimationDuration, animations: {
+                    self.scrollView?.contentInset.top += self.insetTDelta
+                    if self.automaticallyChangeAlpha {
+                        self.alpha = 0.0
+                    }
+                    }, completion: { (complection) in
+                        self.pullingPercent = 0.0
+                })
+            } else if newState == .Refreshing {
+                UIView.animateWithDuration(ZRefreshing.slowAnimationDuration, animations: {
+                    let top = self.scrollViewOriginalInset.top + self.frame.height
+                    self.scrollView?.contentInset.top = top
+                    self.scrollView?.contentOffset.y = -top
+                    }, completion: { (completion) in
+                        self.executeRefreshCallback()
+                })
+            }
         }
     }
-
+    
+    override public func endRefreshing() {
+        if let scrollView = self.scrollView {
+            
+            if scrollView.isKindOfClass(UICollectionView.classForCoder()) {
+                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, Int64(0.1)), dispatch_get_main_queue(), {
+                    super.endRefreshing()
+                })
+            } else {
+                super.endRefreshing()
+            }
+        }
+    }
+    
     override public func scrollViewContentOffsetDidChange(change: [String : AnyObject]?) {
         super.scrollViewContentOffsetDidChange(change)
 
@@ -96,9 +102,9 @@ public class ZRefreshHeader: ZRefreshComponent {
         if self.scrollView!.dragging {
             self.pullingPercent = pullingPercent
             if self.state == .Idle && offsetY < normal2pullingOffsetY {
-                self.setRefreshingState(.Pulling)
+                self.state = .Pulling
             } else if self.state == .Pulling && offsetY >= normal2pullingOffsetY {
-                self.setRefreshingState(.Idle)
+                self.state = .Idle
             }
         } else if self.state == .Pulling {
             self.beginRefreshing()
@@ -107,16 +113,14 @@ public class ZRefreshHeader: ZRefreshComponent {
         }
     }
     
-    override public func endRefreshing() {
-        if let scrollView = self.scrollView {
-            
-            if scrollView.isKindOfClass(UICollectionView.classForCoder()) {
-                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, Int64(0.1)), dispatch_get_main_queue(), { 
-                    super.endRefreshing()
-                })
-            } else {
-                super.endRefreshing()
-            }
-        }
+    override public func prepare() {
+        super.prepare()
+        self.lastUpdatedTimeKey = ZRefreshing.headerLastUpdatedTimeKey
+        self.frame.size.height = ZRefreshing.headerHeight
+    }
+    
+    override public func placeSubViews() {
+        super.placeSubViews()
+        self.frame.origin.y = -self.frame.height - self.ignoredScrollViewContentInsetTop
     }
 }

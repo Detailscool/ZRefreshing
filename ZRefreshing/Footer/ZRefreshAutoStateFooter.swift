@@ -9,10 +9,25 @@ import UIKit
 
 public class ZRefreshAutoStateFooter: ZRefreshAutoFooter {
     
-    public var refreshingTitleHidden: Bool = false
-    private(set) lazy var stateLabel = ZRefreshingLabel()
+    public private(set) lazy var stateLabel = ZRefreshingLabel()
     private var stateTitles:[ZRefreshState: String] = [:]
-
+    
+    override var state: ZRefreshState {
+        get {
+            return super.state
+        }
+        set (newState) {
+            if self.isSameStateForNewValue(newState).0 { return }
+            super.state = newState
+            
+            if self.stateLabel.hidden && newState == .Refreshing {
+                self.stateLabel.text = nil
+            } else {
+                self.stateLabel.text = self.stateTitles[newState]
+            }
+        }
+    }
+    
     public func setTitle(title: String?, forState state: ZRefreshState) {
         if title == nil {return}
         self.stateTitles.updateValue(title!, forKey: state)
@@ -45,16 +60,5 @@ public class ZRefreshAutoStateFooter: ZRefreshAutoFooter {
         
         if self.stateLabel.constraints.count > 0 { return }
         self.stateLabel.frame = self.bounds;
-    }
-    
-    override public func setRefreshingState(state: ZRefreshState) {
-        if self.checkState(state).0 { return }
-        super.setRefreshingState(state)
-        
-        if self.refreshingTitleHidden && state == .Refreshing {
-            self.stateLabel.text = nil
-        } else {
-            self.stateLabel.text = self.stateTitles[state]
-        }
     }
 }

@@ -22,22 +22,22 @@ public class ZRefreshFooter: ZRefreshComponent {
         super.willMoveToSuperview(newSuperview)
         if self.scrollView == nil { return }
         
-        if (self.scrollView!.isKindOfClass(UITableView.classForCoder()) || self.scrollView!.isKindOfClass(UICollectionView.classForCoder())) {
+        if self.scrollView!.isKindOfClass(UITableView.classForCoder()) ||
+           self.scrollView!.isKindOfClass(UICollectionView.classForCoder()) {
             self.scrollView?.reloadDataClosure = { (value) in
-                self.setFooterHidden(value == 0)
+                if self.automaticallyHidden {
+                    self.hidden = (value == 0)
+                }
             }
         }
     }
     
     // MARK: - Component Control
     public func endRefreshingWithNoMoreData() {
-        self.setRefreshingState(.NoMoreData)
+        self.state = .NoMoreData
     }
     
     public func resetNoMoreData() {
-        self.setRefreshingState(.Idle)
+        self.state = .Idle
     }
-    
-    // MARK: - SubClass Implemention
-    public func setFooterHidden(hidden: Bool) {}
 }

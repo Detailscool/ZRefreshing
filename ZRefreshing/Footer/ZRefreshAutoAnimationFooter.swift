@@ -18,7 +18,37 @@ public class ZRefreshAutoAnimationFooter: ZRefreshAutoStateFooter {
     private var stateImages: [ZRefreshState: [UIImage]] = [:]
     private var stateDurations: [ZRefreshState: NSTimeInterval] = [:]
     
-    public func setImages(images: [UIImage], state: ZRefreshState){
+    override var state: ZRefreshState {
+        get {
+            return super.state
+        }
+        set (newState) {
+            if self.isSameStateForNewValue(newState).result {
+                return
+            }
+            super.state = newState
+            
+            if newState == .Refreshing {
+                let images = self.stateImages[state]
+                if images?.count == 0 { return }
+                self.animationView.stopAnimating()
+                self.animationView.hidden = false
+                
+                if images?.count == 1 {
+                    self.animationView.image = images?.last
+                } else {
+                    self.animationView.animationImages = images
+                    self.animationView.animationDuration = self.stateDurations[state] ?? 0.0
+                    self.animationView.startAnimating()
+                }
+            } else if newState == .NoMoreData || newState == .Idle {
+                self.animationView.stopAnimating()
+                self.animationView.hidden = false
+            }
+        }
+    }
+    
+    public func setImages(images: [UIImage], state: ZRefreshState) {
         self.setImages(images, duration: Double(images.count) * 0.1, state: state)
     }
     
@@ -46,7 +76,7 @@ public class ZRefreshAutoAnimationFooter: ZRefreshAutoStateFooter {
         
         if self.animationView.constraints.count > 0 { return }
         self.animationView.frame = self.bounds
-        if self.refreshingTitleHidden {
+        if self.stateLabel.hidden {
             self.animationView.contentMode = .Center
         } else {
             self.animationView.contentMode = .Right
@@ -54,26 +84,4 @@ public class ZRefreshAutoAnimationFooter: ZRefreshAutoStateFooter {
         }
     }
     
-    override public func setRefreshingState(state: ZRefreshState) {
-        if self.checkState(state).0 { return }
-        super.setRefreshingState(state)
-        
-        if state == .Refreshing {    
-            let images = self.stateImages[state]
-            if images?.count == 0 { return }
-            self.animationView.stopAnimating()
-            self.animationView.hidden = false
-            
-            if images?.count == 1 {
-                self.animationView.image = images?.last
-            } else {
-                self.animationView.animationImages = images
-                self.animationView.animationDuration = self.stateDurations[state] ?? 0.0
-                self.animationView.startAnimating()
-            }
-        } else if state == .NoMoreData || state == .Idle {
-            self.animationView.stopAnimating()
-            self.animationView.hidden = false
-        }
-    }
 }
