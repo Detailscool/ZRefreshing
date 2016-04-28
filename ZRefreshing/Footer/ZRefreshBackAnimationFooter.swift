@@ -64,13 +64,17 @@ public class ZRefreshBackAnimationFooter: ZRefreshBackStateFooter {
         }
     }
 
-    override public func setRefreshingState(state: ZRefreshState) {
-        if self.checkState(state).0 { return }
-        super.setRefreshingState(state)
+    override var state: ZRefreshState {
+        get {
+            return super.state
+        }
+        set {
+        if self.isSameStateForNewValue(newValue).0 { return }
+        super.state = newValue
 
-        if state == .Pulling || state == .Refreshing {
+        if newValue == .Pulling || newValue == .Refreshing {
 
-            let images = self.stateImages[state]
+            let images = self.stateImages[newValue]
             if images?.count == 0 { return }
             self.animationView.stopAnimating()
             
@@ -78,11 +82,12 @@ public class ZRefreshBackAnimationFooter: ZRefreshBackStateFooter {
                 self.animationView.image = images?.last
             } else {
                 self.animationView.animationImages = images
-                self.animationView.animationDuration = self.stateDurations[state] ?? 0
+                self.animationView.animationDuration = self.stateDurations[newValue] ?? 0
                 self.animationView.startAnimating()
             }
-        } else if state == .Idle {
+        } else if newValue == .Idle {
             self.animationView.stopAnimating()
+        }
         }
     }
 }

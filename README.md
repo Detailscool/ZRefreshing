@@ -73,6 +73,7 @@ header.stateLabel.hidden = true
 2. footer:
 footer.stateLabel.hidden = true
 ```
+note: 
 
 
 

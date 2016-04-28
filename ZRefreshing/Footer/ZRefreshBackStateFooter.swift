@@ -41,9 +41,14 @@ public class ZRefreshBackStateFooter: ZRefreshBackFooter {
         self.stateLabel.frame = self.bounds;
     }
     
-    override public func setRefreshingState(state: ZRefreshState) {
-        if self.checkState(state).0 { return }
-        super.setRefreshingState(state)
+    override var state: ZRefreshState {
+        get {
+            return super.state
+        }
+        set {
+        if self.isSameStateForNewValue(newValue).0 { return }
+        super.state = newValue
         self.stateLabel.text = self.stateTitles[state]
+        }
     }
 }
