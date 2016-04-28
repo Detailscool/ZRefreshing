@@ -27,7 +27,7 @@ run pod install
 # Usage 
 ## Header
 
-#### add header into your tableView
+#### 1. add header into your tableView
 ``` bash
 var header = ZRefreshNormalHeader(target: self, action: #selector(self.loadData(_:)))
 var header = ZRefreshNormalHeader({
@@ -35,15 +35,15 @@ var header = ZRefreshNormalHeader({
 self.tableView.header = header
 ```
 
-#### start refreshing
+#### 2. start refreshing
 ``` bash
 self.tableView.header?.beginRefreshing()
 ```
-#### stop refreshing
+#### 3. stop refreshing
 ``` bash
 self.tableView.header?.endRefreshing()
 ```
-#### hidden the last update label 
+#### 4. hidden the last update label 
 ``` bash 
 header.lastUpdatedTimeLabelHidden = true
 ```
@@ -66,20 +66,20 @@ self.header.activityIndicatorViewStyle = .WhiteLarge
 ```
 <br /> <br />
 ## Footer
- * 1. add auto footer into your tableView 
+#### 1. add auto footer into your tableView 
 ``` bash
 var footer = ZRefreshAutoFooter(target: self, action: #selector(self.loadData(_:)))
 self.tableView.footer = ZRefreshAutoFooter({
 })
 self.tableView.footer = footer
 ```
-* 2. add normal footer into your tableView
+#### 2. add normal footer into your tableView
 ``` bash
 var footer = ZRefreshBackFooter(target: self, action: #selector(self.loadData(_:)))
 var footer = ZRefreshBackNormalFooter({
 })
 ```
-* 3. stop refreshing
+#### 3. stop refreshing
 ``` bash
 self.tableView.footer?.endRefreshing()
 self.tableView.footer?.endRefreshingWithNoMoreData()
@@ -88,7 +88,7 @@ self.tableView.footer?.endRefreshingWithNoMoreData()
 ``` bash
 self.tableView.footer?.resetNoMoreData()
 ```
-* 4. the footer can auto hide
+#### 4. the footer can auto hide
 ``` bash
 self.footer.automaticallyHidden = true
 ```
@@ -96,20 +96,20 @@ self.footer.automaticallyHidden = true
 ``` bash
 self.footer.pageSize = 20
 ```
-* 5. hidden the state label 
+#### 5. hidden the state label 
 ``` bash
 self.footer.stateLabelHidden = true
 ```
-* 6. when you set a contentInset, you need set the ignore height to ajust the view
+#### 6. when you set a contentInset, you need set the ignore height to ajust the view
 ``` bash
 self.tableView.contentInset = UIEdgeInsetsMake(0, 0, 30, 0)
 self.footer.ignoredScrollViewContentInsetBottom = 30
 ```
-* 7. also, you can set the indicator style
+#### 7. also, you can set the indicator style
 ``` bash 
 self.footer.activityIndicatorViewStyle = .WhiteLarge
 ```
-* 8. disable the automic refresh for a AutoRefreshFooter
+#### 8. disable the automic refresh for a AutoRefreshFooter
 ``` bash
 self.footer.automaticallyRefresh = false
 ```
