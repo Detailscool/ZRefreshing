@@ -1,6 +1,6 @@
 # ZRefreshing
 
-ZRefreshing is a simple swift Refreshing Control for Tableview or CollectionView.
+ZRefreshing is a simple swift Refreshing Control.
 
 # Installation
 ## CocoaPods
@@ -27,7 +27,7 @@ run pod install
 # Usage 
 ## Header
 
-1. add header into your tableView
+1.add header into your tableView
 ``` bash
 var header = ZRefreshNormalHeader(target: self, action: #selector(self.loadData(_:)))
 var header = ZRefreshNormalHeader({
@@ -35,51 +35,51 @@ var header = ZRefreshNormalHeader({
 self.tableView.header = header
 ```
 
-2. start refreshing
+2.start refreshing
 ``` bash
 self.tableView.header?.beginRefreshing()
 ```
-3. stop refreshing
+3.stop refreshing
 ``` bash
 self.tableView.header?.endRefreshing()
 ```
-4. hidden the last update label 
+4.hidden the last update label 
 ``` bash 
 header.lastUpdatedTimeLabelHidden = true
 ```
-5. hidden the state label 
+5.hidden the state label 
 ``` bash
 header.stateLabelHidden = true
 ```
-6. store the time with the custom key 
+6.store the time with the custom key 
 ``` bash
 header.lastUpdatedTimeKey = "custom key"
 ```
-7. when you set a contentInset, you need set a ignored height
+7.when you set a contentInset, you need set a ignored height
 ``` bash
 self.tableView.contentInset = UIEdgeInsetsMake(30, 0, 0, 0)
 header?.ignoredScrollViewContentInsetTop = 30
 ```
-8. also, you can set the indicator style
+8.also, you can set the indicator style
 ``` bash 
 self.header.activityIndicatorViewStyle = .WhiteLarge
 ```
 
 ## Footer
- 1. add auto footer into your tableView 
+ 1.add auto footer into your tableView 
 ``` bash
 var footer = ZRefreshAutoFooter(target: self, action: #selector(self.loadData(_:)))
 self.tableView.footer = ZRefreshAutoFooter({
 })
 self.tableView.footer = footer
 ```
-2. add normal footer into your tableView
+2.add normal footer into your tableView
 ``` bash
 var footer = ZRefreshBackFooter(target: self, action: #selector(self.loadData(_:)))
 var footer = ZRefreshBackNormalFooter({
 })
 ```
-3. stop refreshing
+3.stop refreshing
 ``` bash
 self.tableView.footer?.endRefreshing()
 self.tableView.footer?.endRefreshingWithNoMoreData()
@@ -88,7 +88,7 @@ note: you can use following function reset the refresh state
 ``` bash
 self.tableView.footer?.resetNoMoreData()
 ```
-4. the footer can auto hide
+4.the footer can auto hide
 ``` bash
 self.footer.automaticallyHidden = true
 ```
@@ -96,20 +96,20 @@ note: you can set the page size for the footer, when your rows count less than p
 ``` bash
 self.footer.pageSize = 20
 ```
-5. hidden the state label 
+5.hidden the state label 
 ``` bash
 self.footer.stateLabelHidden = true
 ```
-6. when you set a contentInset, you need set the ignore height to ajust the view
+6.when you set a contentInset, you need set the ignore height to ajust the view
 ``` bash
 self.tableView.contentInset = UIEdgeInsetsMake(0, 0, 30, 0)
 self.footer.ignoredScrollViewContentInsetBottom = 30
 ```
-7. also, you can set the indicator style
+7.also, you can set the indicator style
 ``` bash 
 self.footer.activityIndicatorViewStyle = .WhiteLarge
 ```
-8. disable the automic refresh for a AutoRefreshFooter
+8.disable the automic refresh for a AutoRefreshFooter
 ``` bash
 self.footer.automaticallyRefresh = false
 ```
