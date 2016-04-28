@@ -32,6 +32,7 @@ class ViewController: UITableViewController {
             })
         })
         
+        
     
 //        self.footer = ZRefreshBackNormalFooter(target: self,
 //                                               action: #selector(self.loadMoreData(_:)));
@@ -62,6 +63,15 @@ class ViewController: UITableViewController {
 //        })
 //        self.footer.stateLabel.hidden = true
         self.footer.automaticallyHidden = true
+        self.footer.pageSize = 20
+        self.header.lastUpdatedTimeKey = "custome key"
+//        self.tableView.header?.ignoredScrollViewContentInsetTop = 30
+        self.header.stateLabelHidden = true
+        self.footer.stateLabelHidden = true
+        self.header.activityIndicatorViewStyle = .WhiteLarge
+        self.tableView.contentInset = UIEdgeInsetsMake(30, 0, 30, 0)
+        self.footer.ignoredScrollViewContentInsetBottom = 30
+        self.footer.automaticallyRefresh = false
         self.tableView.header = header
         self.tableView.header?.beginRefreshing()
         self.tableView.footer = footer
