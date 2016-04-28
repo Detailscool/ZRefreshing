@@ -22,14 +22,10 @@ public class ZRefreshFooter: ZRefreshComponent {
         super.willMoveToSuperview(newSuperview)
         if self.scrollView == nil { return }
         
-        if self.scrollView!.totalDataCount == 0 {
-            self.setFooterHidden(true)
-        }
-        
         if (self.scrollView!.isKindOfClass(UITableView.classForCoder()) || self.scrollView!.isKindOfClass(UICollectionView.classForCoder())) {
             self.scrollView?.reloadDataClosure = { (value) in
                 if self.automaticallyHidden {
-                    self.setFooterHidden(value == 0)
+                    self.hidden = (value == 0)
                 }
             }
         }
@@ -43,7 +39,4 @@ public class ZRefreshFooter: ZRefreshComponent {
     public func resetNoMoreData() {
         self.state = .Idle
     }
-    
-    // MARK: - SubClass Implemention
-    public func setFooterHidden(hidden: Bool) {}
 }

@@ -34,12 +34,12 @@ public class ZRefreshBackNormalFooter: ZRefreshBackStateFooter {
         get {
             return super.state
         }
-        set {
-            let result = self.isSameStateForNewValue(newValue)
+        set (newState) {
+            let result = self.isSameStateForNewValue(newState)
             if result.0 { return }
-            super.state = newValue
+            super.state = newState
             
-            if newValue == .Idle {
+            if newState == .Idle {
                 if result.1 == .Refreshing {
                     self.arrowView.transform = CGAffineTransformMakeRotation(0.000001 - CGFloat(M_PI))
                     UIView.animateWithDuration(ZRefreshing.fastAnimationDuration, animations: {
@@ -57,16 +57,16 @@ public class ZRefreshBackNormalFooter: ZRefreshBackStateFooter {
                         }, completion: { (flag) in
                     })
                 }
-            } else if newValue == .Pulling {
+            } else if newState == .Pulling {
                 self.arrowView.hidden = false
                 self.activityIndicator.stopAnimating()
                 UIView.animateWithDuration(ZRefreshing.fastAnimationDuration, animations: {
                     self.arrowView.transform = CGAffineTransformIdentity
                 })
-            } else if newValue == .Refreshing {
+            } else if newState == .Refreshing {
                 self.arrowView.hidden = true
                 self.activityIndicator.startAnimating()
-            } else if newValue == .NoMoreData {
+            } else if newState == .NoMoreData {
                 self.arrowView.hidden = true
                 self.activityIndicator.stopAnimating()
             }

@@ -16,11 +16,11 @@ public class ZRefreshBackStateFooter: ZRefreshBackFooter {
         get {
             return super.state
         }
-        set {
+        set (newState) {
             
-            if self.isSameStateForNewValue(newValue).0 { return }
-            super.state = newValue
-            self.stateLabel.text = self.stateTitles[newValue]
+            if self.isSameStateForNewValue(newState).result { return }
+            super.state = newState
+            self.stateLabel.text = self.stateTitles[newState]
         }
     }
     

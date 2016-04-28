@@ -25,9 +25,7 @@ public class ZRefreshAutoFooter: ZRefreshFooter {
                     self.executeRefreshCallback()
                 })
             }
-        }/* else if self.state == .NoMoreData && self.automaticallyHidden {
-         self.setFooterHidden(true)
-         }*/
+        }
     }
     
     public override var hidden: Bool {
@@ -37,12 +35,16 @@ public class ZRefreshAutoFooter: ZRefreshFooter {
         set {
             let isHidden = self.hidden;
             super.hidden = newValue
-            if !isHidden && hidden {
-                self.state = .Idle
-                self.scrollView?.contentInset.bottom -= self.frame.height
+            if isHidden {
+                if !newValue {
+                    self.scrollView?.contentInset.bottom += self.frame.height
+                    self.frame.origin.y = self.scrollView!.contentSize.height
+                }
             } else {
-                self.scrollView?.contentInset.bottom += self.frame.height
-                self.frame.origin.y = self.scrollView!.contentSize.height
+                if newValue {
+                    self.state = .Idle
+                    self.scrollView?.contentInset.bottom -= self.frame.height
+                }
             }
         }
     }

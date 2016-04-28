@@ -35,12 +35,12 @@ public class ZRefreshBackAnimationFooter: ZRefreshBackStateFooter {
         get {
             return super.state
         }
-        set {
+        set (newState) {
             
             if self.isSameStateForNewValue(state).0 { return }
-            super.state = newValue
+            super.state = newState
             
-            if newValue == .Pulling || newValue == .Refreshing {
+            if newState == .Pulling || newState == .Refreshing {
                 
                 let images = self.stateImages[state]
                 if images?.count == 0 { return }
@@ -53,7 +53,7 @@ public class ZRefreshBackAnimationFooter: ZRefreshBackStateFooter {
                     self.animationView.animationDuration = self.stateDurations[state] ?? 0
                     self.animationView.startAnimating()
                 }
-            } else if newValue == .Idle {
+            } else if newState == .Idle {
                 self.animationView.stopAnimating()
             }
         }

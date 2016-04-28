@@ -15,15 +15,15 @@ public class ZRefreshBackFooter: ZRefreshFooter {
         get {
             return super.state
         }
-        set {
+        set (newState) {
             if self.scrollView == nil { return }
             
-            let result = self.isSameStateForNewValue(newValue)
+            let result = self.isSameStateForNewValue(newState)
             if result.0 { return }
             
-            super.state = newValue
+            super.state = newState
             
-            if newValue == .NoMoreData || newValue == .Idle {
+            if newState == .NoMoreData || newState == .Idle {
                 
                 if .Refreshing == result.1 {
                     UIView.animateWithDuration(ZRefreshing.slowAnimationDuration, animations: {
@@ -37,7 +37,7 @@ public class ZRefreshBackFooter: ZRefreshFooter {
                 if .Refreshing == result.1 && deltaH > CGFloat(0.0) && self.scrollView!.totalDataCount != self.lastRefreshCount{
                     self.scrollView!.contentOffset.y = self.scrollView!.contentOffset.y
                 }
-            } else if newValue == .Refreshing{
+            } else if newState == .Refreshing{
                 
                 self.lastRefreshCount = self.scrollView!.totalDataCount
                 UIView.animateWithDuration(ZRefreshing.fastAnimationDuration, animations: {

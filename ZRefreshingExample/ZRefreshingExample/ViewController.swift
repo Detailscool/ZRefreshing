@@ -13,8 +13,8 @@ class ViewController: UITableViewController {
 
     private var numberOfCell: Int = 0
     private var header: ZRefreshNormalHeader!
-    private var footer: ZRefreshBackNormalFooter!
-//    private var footer: ZRefreshAutoNormalFooter!
+//    private var footer: ZRefreshBackNormalFooter!
+    private var footer: ZRefreshAutoNormalFooter!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,8 +33,8 @@ class ViewController: UITableViewController {
         })
         
     
-        self.footer = ZRefreshBackNormalFooter(target: self,
-                                               action: #selector(self.loadMoreData(_:)));
+//        self.footer = ZRefreshBackNormalFooter(target: self,
+//                                               action: #selector(self.loadMoreData(_:)));
 //        self.footer = ZRefreshBackNormalFooter({
 //            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, Int64(1.5 * Double(NSEC_PER_SEC))), dispatch_get_main_queue(), {
 //                self.numberOfCell += 20
@@ -46,8 +46,8 @@ class ViewController: UITableViewController {
 //                self.tableView.reloadData()
 //            })
 //        })
-//        self.footer = ZRefreshAutoNormalFooter(target: self,
-//                                               action: #selector(self.loadMoreData(_:)))
+        self.footer = ZRefreshAutoNormalFooter(target: self,
+                                               action: #selector(self.loadMoreData(_:)))
         
 //        self.footer = ZRefreshAutoNormalFooter({
 //            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, Int64(1.5 * Double(NSEC_PER_SEC))), dispatch_get_main_queue(), {
@@ -78,7 +78,7 @@ class ViewController: UITableViewController {
     func loadMoreData(componet: ZRefreshComponent) {
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, Int64(1.5 * Double(NSEC_PER_SEC))), dispatch_get_main_queue(), {
             self.numberOfCell += 20
-            if self.numberOfCell >= 100 {
+            if self.numberOfCell >= 40 {
                 self.tableView.footer?.endRefreshingWithNoMoreData()
             } else {
                 self.tableView.footer?.endRefreshing()
