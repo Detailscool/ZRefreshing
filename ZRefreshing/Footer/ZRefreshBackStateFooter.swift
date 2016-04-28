@@ -9,8 +9,20 @@ import UIKit
 
 public class ZRefreshBackStateFooter: ZRefreshBackFooter {
     
-    public private(set) lazy var stateLabel = ZRefreshingLabel()
+    private(set) lazy var stateLabel = ZRefreshingLabel()
     private var stateTitles:[ZRefreshState: String] = [:]
+    
+    override var state: ZRefreshState {
+        get {
+            return super.state
+        }
+        set {
+            
+            if self.isSameStateForNewValue(newValue).0 { return }
+            super.state = newValue
+            self.stateLabel.text = self.stateTitles[newValue]
+        }
+    }
     
     public func setTitle(title: String?, forState state: ZRefreshState) {
         if title == nil {return}
@@ -39,16 +51,5 @@ public class ZRefreshBackStateFooter: ZRefreshBackFooter {
         super.placeSubViews()
         if self.stateLabel.constraints.count > 0 { return }
         self.stateLabel.frame = self.bounds;
-    }
-    
-    override var state: ZRefreshState {
-        get {
-            return super.state
-        }
-        set {
-        if self.isSameStateForNewValue(newValue).0 { return }
-        super.state = newValue
-        self.stateLabel.text = self.stateTitles[state]
-        }
     }
 }

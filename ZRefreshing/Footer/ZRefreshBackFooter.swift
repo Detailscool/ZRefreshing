@@ -11,6 +11,77 @@ public class ZRefreshBackFooter: ZRefreshFooter {
     private var lastBottomDelta: CGFloat = 0.0
     private var lastRefreshCount: Int = 0
     
+    override var state: ZRefreshState {
+        get {
+            return super.state
+        }
+        set {
+            if self.scrollView == nil { return }
+            
+            let result = self.isSameStateForNewValue(newValue)
+            if result.0 { return }
+            
+            super.state = newValue
+            
+            if newValue == .NoMoreData || newValue == .Idle {
+                
+                if .Refreshing == result.1 {
+                    UIView.animateWithDuration(ZRefreshing.slowAnimationDuration, animations: {
+                        self.scrollView!.contentInset.bottom -= self.lastBottomDelta
+                        if self.automaticallyChangeAlpha {self.alpha = 0.0}
+                        }, completion: { (flag: Bool) in
+                            self.pullingPercent = 0.0
+                    })
+                }
+                let deltaH: CGFloat = self.heightForContentBreakView()
+                if .Refreshing == result.1 && deltaH > CGFloat(0.0) && self.scrollView!.totalDataCount != self.lastRefreshCount{
+                    self.scrollView!.contentOffset.y = self.scrollView!.contentOffset.y
+                }
+            } else if newValue == .Refreshing{
+                
+                self.lastRefreshCount = self.scrollView!.totalDataCount
+                UIView.animateWithDuration(ZRefreshing.fastAnimationDuration, animations: {
+                    var bottom = self.frame.height + self.scrollViewOriginalInset.bottom
+                    let deltaH = self.heightForContentBreakView()
+                    if deltaH < 0 {
+                        bottom -= deltaH
+                    }
+                    self.lastBottomDelta = bottom - self.scrollView!.contentInset.bottom
+                    self.scrollView?.contentInset.bottom = bottom;
+                    self.scrollView?.contentOffset.y = self.happenOffsetY() + self.frame.height
+                    }, completion: { (flag) in
+                        self.executeRefreshCallback()
+                })
+            }
+        }
+    }
+    
+    override public func endRefreshing() {
+        if let scrollView = self.scrollView {
+            
+            if scrollView.isKindOfClass(UICollectionView.classForCoder()) {
+                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, Int64(0.1)), dispatch_get_main_queue(), {
+                    super.endRefreshing()
+                })
+            } else {
+                super.endRefreshing()
+            }
+        }
+    }
+    
+    override public func endRefreshingWithNoMoreData() {
+        if let scrollView = self.scrollView {
+            
+            if scrollView.isKindOfClass(UICollectionView.classForCoder()) {
+                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, Int64(0.1)), dispatch_get_main_queue(), {
+                    super.endRefreshingWithNoMoreData()
+                })
+            } else {
+                super.endRefreshingWithNoMoreData()
+            }
+        }
+    }
+    
     // MARK: - Override
     override public func scrollViewContentOffsetDidChange(change: [String : AnyObject]?) {
         super.scrollViewContentOffsetDidChange(change)
@@ -34,7 +105,7 @@ public class ZRefreshBackFooter: ZRefreshFooter {
             self.pullingPercent = pullingPercent
             let normal2pullingOffsetY = happenOffsetY + self.frame.height
             if self.state == .Idle && currentOffsetY > normal2pullingOffsetY {
-                self.state == .Pulling
+                self.state = .Pulling
             } else if self.state == .Pulling && currentOffsetY <= normal2pullingOffsetY {
                 self.state = .Idle
             }
@@ -53,77 +124,6 @@ public class ZRefreshBackFooter: ZRefreshFooter {
         let scrollHeight = self.scrollView!.frame.height - self.scrollViewOriginalInset.top - self.scrollViewOriginalInset.bottom + self.ignoredScrollViewContentInsetBottom
         
         self.frame.origin.y = max(contentHeight, scrollHeight)
-    }
-    
-    
-    override var state: ZRefreshState {
-        get {
-            return super.state
-        }
-        set {
-        if self.scrollView == nil { return }
-        
-        let result = self.isSameStateForNewValue(newValue)
-        if result.0 { return }
-        super.state = state
-        
-        if newValue == .NoMoreData || newValue == .Idle {
-            
-            if .Refreshing == result.state {
-                UIView.animateWithDuration(ZRefreshing.slowAnimationDuration, animations: {
-                    self.scrollView!.contentInset.bottom -= self.lastBottomDelta
-                    if self.automaticallyChangeAlpha {self.alpha = 0.0}
-                    }, completion: { (flag: Bool) in
-                        self.pullingPercent = 0.0
-                })
-            }
-            let deltaH: CGFloat = self.heightForContentBreakView()
-            if .Refreshing == result.1 && deltaH > CGFloat(0.0) && self.scrollView!.totalDataCount != self.lastRefreshCount{
-                self.scrollView!.contentOffset.y = self.scrollView!.contentOffset.y
-            }
-        } else if newValue == .Refreshing{
-            
-            self.lastRefreshCount = self.scrollView!.totalDataCount
-            UIView.animateWithDuration(ZRefreshing.fastAnimationDuration, animations: {
-                var bottom = self.frame.height + self.scrollViewOriginalInset.bottom
-                let deltaH = self.heightForContentBreakView()
-                if deltaH < 0 {
-                    bottom -= deltaH
-                }
-                self.lastBottomDelta = bottom - self.scrollView!.contentInset.bottom
-                self.scrollView?.contentInset.bottom = bottom;
-                self.scrollView?.contentOffset.y = self.happenOffsetY() + self.frame.height
-                }, completion: { (flag) in
-                    self.executeRefreshCallback()
-            })
-        }
-        }
-    }
-    
-    override public func endRefreshing() {
-        if let scrollView = self.scrollView {
-            
-            if scrollView.isKindOfClass(UICollectionView.classForCoder()) {
-                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, Int64(0.1)), dispatch_get_main_queue(), {
-                    super.endRefreshing()
-                })
-            } else {
-                super.endRefreshing()
-            }
-        }
-    }
-
-    override public func endRefreshingWithNoMoreData() {
-        if let scrollView = self.scrollView {
-            
-            if scrollView.isKindOfClass(UICollectionView.classForCoder()) {
-                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, Int64(0.1)), dispatch_get_main_queue(), {
-                    super.endRefreshingWithNoMoreData()
-                })
-            } else {
-                super.endRefreshingWithNoMoreData()
-            }
-        }
     }
     
     // MARK: - Private

@@ -22,10 +22,54 @@ public class ZRefreshBackNormalFooter: ZRefreshBackStateFooter {
         
         return activityIndicator
     }()
+    
     public var activityIndicatorViewStyle: UIActivityIndicatorViewStyle = .Gray {
         didSet {
             self.activityIndicator.activityIndicatorViewStyle = self.activityIndicatorViewStyle
             self.setNeedsLayout()
+        }
+    }
+    
+    override var state: ZRefreshState {
+        get {
+            return super.state
+        }
+        set {
+            let result = self.isSameStateForNewValue(newValue)
+            if result.0 { return }
+            super.state = newValue
+            
+            if newValue == .Idle {
+                if result.1 == .Refreshing {
+                    self.arrowView.transform = CGAffineTransformMakeRotation(0.000001 - CGFloat(M_PI))
+                    UIView.animateWithDuration(ZRefreshing.fastAnimationDuration, animations: {
+                        self.activityIndicator.alpha = 0.0
+                        }, completion: { (flag) in
+                            self.activityIndicator.alpha = 1.0
+                            self.activityIndicator.stopAnimating()
+                            self.arrowView.hidden = false
+                    })
+                } else {
+                    self.arrowView.hidden = false
+                    self.activityIndicator.stopAnimating()
+                    UIView.animateWithDuration(ZRefreshing.fastAnimationDuration, animations: {
+                        self.arrowView.transform = CGAffineTransformMakeRotation(0.000001 - CGFloat(M_PI))
+                        }, completion: { (flag) in
+                    })
+                }
+            } else if newValue == .Pulling {
+                self.arrowView.hidden = false
+                self.activityIndicator.stopAnimating()
+                UIView.animateWithDuration(ZRefreshing.fastAnimationDuration, animations: {
+                    self.arrowView.transform = CGAffineTransformIdentity
+                })
+            } else if newValue == .Refreshing {
+                self.arrowView.hidden = true
+                self.activityIndicator.startAnimating()
+            } else if newValue == .NoMoreData {
+                self.arrowView.hidden = true
+                self.activityIndicator.stopAnimating()
+            }
         }
     }
     
@@ -66,49 +110,6 @@ public class ZRefreshBackNormalFooter: ZRefreshBackStateFooter {
         
         if (self.activityIndicator.constraints.count == 0) {
             self.activityIndicator.center = arrowCenter;
-        }
-    }
-    
-    override var state: ZRefreshState {
-        get {
-            return super.state
-        }
-        set {
-        let result = self.isSameStateForNewValue(newValue)
-        if result.0 { return }
-        super.state = newValue
-        
-        if newValue == .Idle {
-            if result.1 == .Refreshing {
-                self.arrowView.transform = CGAffineTransformMakeRotation(0.000001 - CGFloat(M_PI))
-                UIView.animateWithDuration(ZRefreshing.fastAnimationDuration, animations: {
-                    self.activityIndicator.alpha = 0.0
-                    }, completion: { (flag) in
-                        self.activityIndicator.alpha = 1.0
-                        self.activityIndicator.stopAnimating()
-                        self.arrowView.hidden = false
-                })
-            } else {
-                self.arrowView.hidden = false
-                self.activityIndicator.stopAnimating()
-                UIView.animateWithDuration(ZRefreshing.fastAnimationDuration, animations: {
-                    self.arrowView.transform = CGAffineTransformMakeRotation(0.000001 - CGFloat(M_PI))
-                    }, completion: { (flag) in
-                })
-            }
-        } else if newValue == .Pulling {
-            self.arrowView.hidden = false
-            self.activityIndicator.stopAnimating()
-            UIView.animateWithDuration(ZRefreshing.fastAnimationDuration, animations: {
-                self.arrowView.transform = CGAffineTransformIdentity
-            })
-        } else if newValue == .Refreshing {
-            self.arrowView.hidden = true
-            self.activityIndicator.startAnimating()
-        } else if newValue == .NoMoreData {
-            self.arrowView.hidden = true
-            self.activityIndicator.stopAnimating()
-        }
         }
     }
 }
