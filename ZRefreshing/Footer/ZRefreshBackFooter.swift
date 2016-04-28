@@ -60,7 +60,7 @@ public class ZRefreshBackFooter: ZRefreshFooter {
         if let scrollView = self.scrollView {
             
             if scrollView.isKindOfClass(UICollectionView.classForCoder()) {
-                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, Int64(0.1)), dispatch_get_main_queue(), {
+                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, Int64(0.01)), dispatch_get_main_queue(), {
                     super.endRefreshing()
                 })
             } else {
@@ -73,7 +73,7 @@ public class ZRefreshBackFooter: ZRefreshFooter {
         if let scrollView = self.scrollView {
             
             if scrollView.isKindOfClass(UICollectionView.classForCoder()) {
-                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, Int64(0.1)), dispatch_get_main_queue(), {
+                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, Int64(0.01)), dispatch_get_main_queue(), {
                     super.endRefreshingWithNoMoreData()
                 })
             } else {

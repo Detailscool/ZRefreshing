@@ -56,7 +56,7 @@ public class ZRefreshAnimationHeader: ZRefreshStateHeader {
         }
     }
     
-    public func setImages(images: [UIImage], duration: NSTimeInterval, state: ZRefreshState){
+    public func setImages(images: [UIImage], duration: NSTimeInterval, forState state: ZRefreshState){
         if images.count == 0 { return }
         
         self.stateImages.updateValue(images, forKey: state)
@@ -68,8 +68,8 @@ public class ZRefreshAnimationHeader: ZRefreshStateHeader {
         }
     }
     
-    public func setImages(images: [UIImage], state: ZRefreshState){
-        self.setImages(images, duration: Double(images.count) * 0.1, state: state)
+    public func setImages(images: [UIImage], forState state: ZRefreshState){
+        self.setImages(images, duration: Double(images.count) * 0.1, forState: state)
     }
     
     override public func prepare() {
