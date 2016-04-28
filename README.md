@@ -27,7 +27,7 @@ run pod install
 # Usage 
 ## Header
 
-* 1. add header into your tableView
+##### * add header into your tableView
 ``` bash
 var header = ZRefreshNormalHeader(target: self, action: #selector(self.loadData(_:)))
 var header = ZRefreshNormalHeader({
@@ -35,11 +35,11 @@ var header = ZRefreshNormalHeader({
 self.tableView.header = header
 ```
 
-* 2. start refreshing
+##### * start refreshing
 ``` bash
 self.tableView.header?.beginRefreshing()
 ```
-* 3. stop refreshing
+##### * stop refreshing
 ``` bash
 self.tableView.header?.endRefreshing()
 ```
