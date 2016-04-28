@@ -13,7 +13,9 @@ class ViewController: UITableViewController {
 
     private var numberOfCell: Int = 0
     private var header: ZRefreshNormalHeader!
-    private var footer: ZRefreshAutoNormalFooter!
+    private var footer: ZRefreshBackNormalFooter!
+//    private var footer: ZRefreshAutoNormalFooter!
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -30,19 +32,35 @@ class ViewController: UITableViewController {
             })
         })
         
-//        self.tableView.footer = ZRefreshBackNormalFooter(target: self,
-//                                                         action: #selector(self.loadData(_:)));
-        self.footer = ZRefreshAutoNormalFooter({
-            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, Int64(1.5 * Double(NSEC_PER_SEC))), dispatch_get_main_queue(), {
-                self.numberOfCell += 20
-                if self.numberOfCell >= 40 {
-                    self.tableView.footer?.endRefreshingWithNoMoreData()
-                } else {
-                    self.tableView.footer?.endRefreshing()
-                }
-                self.tableView.reloadData()
-            })
-        })
+    
+        self.footer = ZRefreshBackNormalFooter(target: self,
+                                               action: #selector(self.loadMoreData(_:)));
+//        self.footer = ZRefreshBackNormalFooter({
+//            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, Int64(1.5 * Double(NSEC_PER_SEC))), dispatch_get_main_queue(), {
+//                self.numberOfCell += 20
+//                if self.numberOfCell >= 40 {
+//                    self.tableView.footer?.endRefreshingWithNoMoreData()
+//                } else {
+//                    self.tableView.footer?.endRefreshing()
+//                }
+//                self.tableView.reloadData()
+//            })
+//        })
+//        self.footer = ZRefreshAutoNormalFooter(target: self,
+//                                               action: #selector(self.loadMoreData(_:)))
+        
+//        self.footer = ZRefreshAutoNormalFooter({
+//            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, Int64(1.5 * Double(NSEC_PER_SEC))), dispatch_get_main_queue(), {
+//                self.numberOfCell += 20
+//                if self.numberOfCell >= 40 {
+//                    self.tableView.footer?.endRefreshingWithNoMoreData()
+//                } else {
+//                    self.tableView.footer?.endRefreshing()
+//                }
+//                self.tableView.reloadData()
+//            })
+//        })
+//        self.footer.stateLabel.hidden = true
         self.footer.automaticallyHidden = true
         self.tableView.header = header
         self.tableView.header?.beginRefreshing()
@@ -55,6 +73,18 @@ class ViewController: UITableViewController {
         } else if componet.isKindOfClass(ZRefreshFooter.classForCoder()) {
             componet.endRefreshing()
         }
+    }
+    
+    func loadMoreData(componet: ZRefreshComponent) {
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, Int64(1.5 * Double(NSEC_PER_SEC))), dispatch_get_main_queue(), {
+            self.numberOfCell += 20
+            if self.numberOfCell >= 100 {
+                self.tableView.footer?.endRefreshingWithNoMoreData()
+            } else {
+                self.tableView.footer?.endRefreshing()
+            }
+            self.tableView.reloadData()
+        })
     }
     
     override func didReceiveMemoryWarning() {
