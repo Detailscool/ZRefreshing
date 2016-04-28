@@ -1,6 +1,6 @@
 # ZRefreshing
 
-ZRefreshing is a simple swift Refreshing Control.
+ZRefreshing is a simple Refreshing Control for swift.
 
 # Installation
 ## CocoaPods
