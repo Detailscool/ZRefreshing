@@ -14,8 +14,8 @@ public class ZRefreshHeader: ZRefreshComponent {
     }
     
     public var lastUpdatedTimeKey: String = ZRefreshing.headerLastUpdatedTimeKey
+    public var ignoredScrollViewContentInsetTop: CGFloat = 0.0
     private var insetTDelta: CGFloat = 0.0
-    private var ignoredScrollViewContentInsetTop: CGFloat = 0.0
 
     override var state: ZRefreshState {
         get {

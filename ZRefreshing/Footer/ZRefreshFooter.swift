@@ -9,10 +9,10 @@ import UIKit
 
 public class ZRefreshFooter: ZRefreshComponent {
 
-    internal var ignoredScrollViewContentInsetBottom: CGFloat = 0.0
+    public var ignoredScrollViewContentInsetBottom: CGFloat = 0.0
     public var automaticallyHidden: Bool = false
-    
-    // MARK: - Override
+    public var pageSize: Int = 0
+    public var stateLabelHidden: Bool = false
     override public func prepare() {
         self.frame.size.height = ZRefreshing.footerHeight
     }
@@ -22,10 +22,16 @@ public class ZRefreshFooter: ZRefreshComponent {
         super.willMoveToSuperview(newSuperview)
         if self.scrollView == nil { return }
         
-        if (self.scrollView!.isKindOfClass(UITableView.classForCoder()) || self.scrollView!.isKindOfClass(UICollectionView.classForCoder())) {
+        if  self.scrollView!.isKindOfClass(UITableView.classForCoder()) ||
+            self.scrollView!.isKindOfClass(UICollectionView.classForCoder()) {
             self.scrollView?.reloadDataClosure = { (value) in
                 if self.automaticallyHidden {
-                    self.hidden = (value == 0)
+                    if self.state == .NoMoreData {
+                        self.hidden = true
+                    } else {
+                        // if you number of rows less than page size hidden this footer
+                        self.hidden = (self.pageSize > 0 ? value < self.pageSize : value == 0)
+                    }
                 }
             }
         }

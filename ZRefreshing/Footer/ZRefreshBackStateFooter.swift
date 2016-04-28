@@ -12,6 +12,12 @@ public class ZRefreshBackStateFooter: ZRefreshBackFooter {
     private(set) lazy var stateLabel = ZRefreshingLabel()
     private var stateTitles:[ZRefreshState: String] = [:]
     
+    public override var stateLabelHidden: Bool {
+        didSet {
+            self.stateLabel.hidden = true
+        }
+    }
+    
     override var state: ZRefreshState {
         get {
             return super.state

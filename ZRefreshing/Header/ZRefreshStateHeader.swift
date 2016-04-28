@@ -10,8 +10,8 @@ import UIKit
 
 public class ZRefreshStateHeader: ZRefreshHeader {
 
-    public private(set) lazy var lastUpdatedTimeLabel = ZRefreshingLabel()
-    public private(set) lazy var stateLabel = ZRefreshingLabel()
+    private(set) lazy var lastUpdatedTimeLabel = ZRefreshingLabel()
+    private(set) lazy var stateLabel = ZRefreshingLabel()
     
     private var stateTitles: [ZRefreshState : String] = [:]
     private var currentCalendar: NSCalendar? = NSCalendar(calendarIdentifier: NSCalendarIdentifierGregorian)
@@ -19,7 +19,12 @@ public class ZRefreshStateHeader: ZRefreshHeader {
     
     public var lastUpdatedTimeLabelHidden: Bool = false {
         didSet {
-            self.lastUpdatedTimeLabel.hidden = hidden
+            self.lastUpdatedTimeLabel.hidden = self.lastUpdatedTimeLabelHidden
+        }
+    }
+    public var stateLabelHidden: Bool = false {
+        didSet {
+            self.stateLabel.hidden = self.stateLabelHidden
         }
     }
     

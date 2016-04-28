@@ -9,7 +9,7 @@ import UIKit
 
 public class ZRefreshNormalHeader: ZRefreshStateHeader {
     
-    public private(set) lazy var arrowView: UIImageView = {
+    private(set) lazy var arrowView: UIImageView = {
         let arrowView = UIImageView()
         arrowView.image = ZRefreshing.imageOf("arrow.png")
         return arrowView
