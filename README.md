@@ -47,20 +47,20 @@ self.tableView.header?.endRefreshing()
 ``` bash 
 header.lastUpdatedTimeLabelHidden = true
 ```
-#### hidden the state label 
+#### 5. hidden the state label 
 ``` bash
 header.stateLabelHidden = true
 ```
-#### store the time with the custom key 
+#### 6. store the time with the custom key 
 ``` bash
 header.lastUpdatedTimeKey = "custom key"
 ```
-#### when you set a contentInset, you need set a ignored height
+#### 7. when you set a contentInset, you need set a ignored height
 ``` bash
 self.tableView.contentInset = UIEdgeInsetsMake(30, 0, 0, 0)
 header?.ignoredScrollViewContentInsetTop = 30
 ```
-#### also, you can set the indicator style
+#### 8. also, you can set the indicator style
 ``` bash 
 self.header.activityIndicatorViewStyle = .WhiteLarge
 ```
